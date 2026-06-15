@@ -1,0 +1,597 @@
+/* ===== DAYSPLIT COMPONENT ===== */
+.daysplit {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* ===== SECTION HEADER ===== */
+.daysplit__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.daysplit__header-icon {
+  color: var(--cyan);
+  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5));
+}
+
+.daysplit__title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.daysplit__subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* ===== SECTION CARDS ===== */
+.daysplit__section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.daysplit__section:first-child {
+  z-index: 2;
+}
+
+.daysplit__section:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.daysplit__section-title {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.daysplit__section-title span {
+  font-size: 1.1rem;
+}
+
+/* ===== WEEKLY GRID ===== */
+.daysplit__week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+}
+
+.daysplit__day-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 110px;
+}
+
+.daysplit__day-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-active);
+  box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.05);
+}
+
+.daysplit__day-card--today {
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25), inset 0 0 20px rgba(0, 240, 255, 0.06);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.daysplit__day-card--today::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+.daysplit__day-label {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.daysplit__day-card--today .daysplit__day-label {
+  color: var(--cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+.daysplit__day-sphere {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+.daysplit__day-name {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.daysplit__day-badge {
+  font-family: var(--font-heading);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: rgba(0, 240, 255, 0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+/* ===== DAY DROPDOWN ===== */
+.daysplit__dropdown-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+.daysplit__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-active);
+  backdrop-filter: blur(var(--glass-blur-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  min-width: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.15);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.daysplit__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.daysplit__dropdown-item:hover {
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+}
+
+.daysplit__dropdown-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+/* ===== SPHERE MANAGER ===== */
+.daysplit__spheres-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.daysplit__sphere-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.daysplit__sphere-tag:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.daysplit__sphere-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.daysplit__sphere-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.daysplit__sphere-delete:hover {
+  color: var(--red);
+  filter: drop-shadow(0 0 4px rgba(255, 51, 102, 0.5));
+}
+
+.daysplit__add-form {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.daysplit__add-input {
+  flex: 1;
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  padding: 8px 14px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border-ghost) !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.daysplit__add-input--icon {
+  flex: 0 0 50px;
+  text-align: center;
+  font-size: 1.2rem !important;
+  padding: 8px !important;
+}
+
+.daysplit__add-input:focus {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.15) !important;
+}
+
+.daysplit__emoji-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+.daysplit__emoji-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-active);
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.15);
+  animation: fadeIn 0.2s ease-out;
+  margin-top: 4px;
+}
+
+.daysplit__emoji-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.daysplit__emoji-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.daysplit__add-input::placeholder {
+  font-family: var(--font-mono) !important;
+  color: var(--text-dim) !important;
+  font-size: 0.8rem !important;
+}
+
+.daysplit__add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.daysplit__add-btn:hover {
+  background: var(--cyan);
+  color: var(--bg-deepspace);
+  box-shadow: var(--cyan-glow);
+}
+
+.daysplit__add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.daysplit__add-btn:disabled:hover {
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+  box-shadow: none;
+}
+
+/* ===== HABIT TRACKER ===== */
+.daysplit__habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.daysplit__habit-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 80px 32px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.daysplit__habit-row:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.daysplit__habit-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.daysplit__habit-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.daysplit__habit-name {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.daysplit__habit-checks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.daysplit__habit-check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.daysplit__habit-day-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.daysplit__habit-checkbox {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-ghost);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  color: transparent;
+}
+
+.daysplit__habit-checkbox:hover {
+  border-color: var(--cyan-dim);
+  background: rgba(0, 240, 255, 0.04);
+}
+
+.daysplit__habit-checkbox--checked {
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+.daysplit__habit-checkbox--checked:hover {
+  background: rgba(0, 240, 255, 0.2);
+}
+
+.daysplit__habit-day-label--today {
+  color: var(--cyan);
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.daysplit__habit-checkbox--today {
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.15);
+}
+
+.daysplit__habit-percent {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.daysplit__habit-percent--full {
+  color: var(--green);
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+}
+
+.daysplit__habit-percent--high {
+  color: var(--cyan);
+}
+
+.daysplit__habit-percent--mid {
+  color: var(--amber);
+}
+
+.daysplit__habit-percent--low {
+  color: var(--text-dim);
+}
+
+.daysplit__habit-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.daysplit__habit-delete:hover {
+  color: var(--red);
+  border-color: rgba(255, 51, 102, 0.3);
+  background: rgba(255, 51, 102, 0.08);
+}
+
+/* ===== EMPTY STATE ===== */
+.daysplit__empty {
+  text-align: center;
+  padding: 32px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* ===== DECORATIVE LINE ===== */
+.daysplit__divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-ghost), transparent);
+  margin: 8px 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .daysplit__week-grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .daysplit__day-card {
+    padding: 10px 4px;
+    min-height: 90px;
+  }
+
+  .daysplit__day-label {
+    font-size: 0.55rem;
+  }
+
+  .daysplit__day-name {
+    font-size: 0.65rem;
+  }
+
+  .daysplit__habit-row {
+    grid-template-columns: 120px 1fr 60px 28px;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .daysplit__habit-checkbox {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .daysplit__week-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .daysplit__habit-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .daysplit__habit-checks {
+    justify-self: start;
+  }
+
+  .daysplit__habit-percent {
+    text-align: left;
+  }
+}

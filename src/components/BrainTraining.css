@@ -1,0 +1,178 @@
+/* BrainTraining.css */
+.brain-training {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bt-tabs {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+}
+
+.bt-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.bt-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.bt-tab--active {
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.bt-panel {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  min-height: 400px;
+}
+
+/* Timer */
+.bt-timer-display {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 2px dashed var(--border-ghost);
+}
+
+.bt-timer-text {
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  color: var(--cyan);
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+  line-height: 1;
+}
+
+.bt-timer-display--active {
+  border-style: solid;
+  border-color: var(--cyan);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+  animation: pulse-glow 2s infinite;
+}
+
+.bt-controls {
+  display: flex;
+  gap: 16px;
+}
+
+.bt-durations {
+  display: flex;
+  gap: 8px;
+}
+
+/* Breathing */
+.bt-breathe-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bt-breathe-circle {
+  position: absolute;
+  border-radius: 50%;
+  transition-property: width, height, background, border, box-shadow;
+  transition-timing-function: linear;
+}
+
+.bt-breathe-circle--inhale {
+  width: 320px;
+  height: 320px;
+  background: rgba(0, 240, 255, 0.2);
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+  transition-duration: 4s;
+}
+
+.bt-breathe-circle--hold {
+  width: 320px;
+  height: 320px;
+  background: rgba(245, 158, 11, 0.2);
+  border: 2px solid var(--amber);
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+  transition-duration: 6s;
+}
+
+.bt-breathe-circle--exhale {
+  width: 140px;
+  height: 140px;
+  background: rgba(79, 70, 229, 0.2);
+  border: 2px solid #4f46e5;
+  box-shadow: 0 0 40px rgba(79, 70, 229, 0.4);
+  transition-duration: 8s;
+}
+
+.bt-breathe-text {
+  position: relative;
+  z-index: 10;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Delay Gratification */
+.bt-delay-presets {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bt-delay-btn {
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.bt-delay-btn:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--cyan);
+}
+
+.bt-history {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.bt-history-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}

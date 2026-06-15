@@ -1,0 +1,225 @@
+/* EmotionJournal.css */
+.emotion-journal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ej-top-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .ej-top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ej-panel {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ej-panel-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.ej-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.ej-mood-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ej-mood-btn {
+  flex: 1;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-ghost);
+  background: var(--bg-card);
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.3s ease;
+}
+
+.ej-mood-btn:hover {
+  background: var(--bg-card-hover);
+}
+
+.ej-mood-btn--active {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+  box-shadow: 0 0 15px var(--color-glow);
+}
+
+.ej-mood-icon {
+  font-size: 1.5rem;
+}
+
+.ej-mood-label {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.ej-save-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ej-toast {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+/* Gamification */
+.ej-level-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ej-level-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--cyan);
+  line-height: 1;
+}
+
+.ej-level-name {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.ej-xp-bar {
+  display: flex;
+  gap: 4px;
+  height: 12px;
+  margin: 8px 0;
+}
+
+.ej-xp-segment {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ej-xp-segment--filled {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 5px var(--cyan);
+}
+
+.ej-stats-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* Calendar */
+.ej-calendar-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ej-calendar-day {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: help;
+  position: relative;
+}
+
+.ej-calendar-day--great { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.ej-calendar-day--good { background: var(--cyan); box-shadow: 0 0 5px var(--cyan); }
+.ej-calendar-day--neutral { background: var(--amber); box-shadow: 0 0 5px var(--amber); }
+.ej-calendar-day--bad { background: var(--violet); box-shadow: 0 0 5px var(--violet); }
+.ej-calendar-day--terrible { background: var(--red); box-shadow: 0 0 5px var(--red); }
+
+.ej-calendar-day--active {
+  box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--cyan);
+  transform: scale(1.2);
+  z-index: 2;
+}
+
+/* Past Entries */
+.ej-history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.ej-history-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+}
+
+.ej-history-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 60px;
+}
+
+.ej-history-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.ej-history-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.ej-history-delete:hover {
+  color: var(--red);
+}
+
+.ej-history-text {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+}

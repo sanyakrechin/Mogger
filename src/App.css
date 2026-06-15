@@ -1,0 +1,70 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app__content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: var(--page-padding);
+  max-width: calc(1440px + var(--sidebar-width));
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.app__header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app__date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.app__split-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-ghost);
+  background: var(--bg-card);
+}
+
+.app__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app__status {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app__status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-glow 2s ease-in-out infinite;
+}

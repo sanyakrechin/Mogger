@@ -1,0 +1,401 @@
+/* ===== GOOGLE FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+/* ===== CSS VARIABLES — CYBERPUNK HUD ===== */
+:root {
+  /* Backgrounds */
+  --bg-deepspace: #0a0e1a;
+  --bg-surface: #0d1117;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --bg-sidebar: rgba(10, 14, 26, 0.95);
+
+  /* Borders */
+  --border-ghost: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(0, 240, 255, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Primary Neon Cyan */
+  --cyan: #00f0ff;
+  --cyan-dim: rgba(0, 240, 255, 0.3);
+  --cyan-glow: 0 0 15px rgba(0, 240, 255, 0.4);
+  --cyan-glow-strong: 0 0 30px rgba(0, 240, 255, 0.6);
+
+  /* Secondary Violet */
+  --violet: #8b5cf6;
+  --violet-dim: rgba(139, 92, 246, 0.3);
+
+  /* Functional */
+  --green: #00ff88;
+  --green-dim: rgba(0, 255, 136, 0.2);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245, 158, 11, 0.2);
+  --red: #ff3366;
+  --red-dim: rgba(255, 51, 102, 0.2);
+  --red-pulse: rgba(255, 51, 102, 0.6);
+
+  /* Text */
+  --text-primary: #dce4e5;
+  --text-secondary: #849495;
+  --text-dim: rgba(220, 228, 229, 0.4);
+
+  /* Typography */
+  --font-heading: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  /* Spacing */
+  --sidebar-width: 220px;
+  --unit: 4px;
+  --gutter: 24px;
+  --page-padding: 32px;
+
+  /* Glass */
+  --glass-blur: 20px;
+  --glass-blur-strong: 40px;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--bg-deepspace);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+
+#root {
+  min-height: 100vh;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+}
+
+h2 {
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+p, span, li, label {
+  font-family: var(--font-body);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.2);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.4);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-active);
+  box-shadow: inset 0 0 30px rgba(0, 240, 255, 0.05);
+}
+
+.neon-text {
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.label-caps {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.data-value {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-ghost);
+  background: var(--bg-card);
+}
+
+.badge--cyan {
+  color: var(--cyan);
+  border-color: rgba(0, 240, 255, 0.3);
+  background: rgba(0, 240, 255, 0.08);
+}
+
+.badge--green {
+  color: var(--green);
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.08);
+}
+
+.badge--amber {
+  color: var(--amber);
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.badge--red {
+  color: var(--red);
+  border-color: rgba(255, 51, 102, 0.3);
+  background: rgba(255, 51, 102, 0.08);
+}
+
+.badge--violet {
+  color: var(--violet);
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 1px solid var(--border-ghost);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: var(--cyan-glow);
+}
+
+.btn--primary {
+  background: var(--cyan);
+  color: #0a0e1a;
+  border-color: var(--cyan);
+}
+
+.btn--primary:hover {
+  background: #33f3ff;
+  color: #0a0e1a;
+  box-shadow: var(--cyan-glow-strong);
+}
+
+.btn--danger {
+  border-color: rgba(255, 51, 102, 0.3);
+  color: var(--red);
+}
+
+.btn--danger:hover {
+  border-color: var(--red);
+  box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+}
+
+.btn--small {
+  padding: 6px 12px;
+  font-size: 0.65rem;
+}
+
+/* ===== INPUTS ===== */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-ghost);
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23849495' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+select option {
+  background-color: var(--bg-deepspace);
+  color: var(--text-primary);
+}
+
+/* ===== CHECKBOX (Custom) ===== */
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-ghost);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-wrapper input:checked + .checkbox-custom {
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.15);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.checkbox-wrapper input:checked + .checkbox-custom::after {
+  content: '✓';
+  color: var(--cyan);
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.5); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.3); }
+}
+
+@keyframes breathe-in {
+  from { transform: scale(0.6); opacity: 0.5; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes breathe-hold {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes breathe-out {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0.6); opacity: 0.5; }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideInLeft 0.3s ease-out;
+}
