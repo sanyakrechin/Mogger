@@ -13,9 +13,7 @@ const ACHIEVEMENTS_DEF = [
 
 export default function Settings() {
   const { state } = useAppState();
-  const { xp, level, achievements } = state.gamification;
-
-  const currentLevelXp = xp; // Or xp minus previous levels if we want a relative bar
+  const { xp, level } = state.gamification;
   const nextLevelXp = getXpForNextLevel(level);
   
   // To make the progress bar relative to current level:
