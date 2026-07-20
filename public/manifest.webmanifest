@@ -1,0 +1,17 @@
+{
+  "name": "Mogger — BRAIN.OS",
+  "short_name": "Mogger",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "description": "Персональный трекер продуктивности и недели",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
