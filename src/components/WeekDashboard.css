@@ -775,63 +775,69 @@
 /* ═══════ RESPONSIVE ═══════ */
 @media (max-width: 768px) {
   .week-dash {
-    gap: 16px;
+    gap: 14px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
   }
 
   .week-dash__strip {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1px;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .week-dash__day-card {
-    padding: 6px 1px;
+    padding: 5px 0px;
     min-width: 0;
-    gap: 2px;
-    border-radius: 4px;
+    gap: 1px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .week-dash__day-label {
-    font-size: 0.5rem;
-    letter-spacing: 0.05em;
+    font-size: 0.45rem;
+    letter-spacing: 0;
   }
 
   .week-dash__day-date {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
+    font-weight: 700;
   }
 
   .week-dash__day-icon {
-    font-size: 0.85rem;
-    margin: 1px 0;
+    font-size: 0.75rem;
+    margin: 0;
   }
 
   .week-dash__day-name {
-    font-size: 0.38rem;
+    font-size: 0.35rem;
     letter-spacing: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 100%;
+    line-height: 1;
   }
 
   .week-dash__day-stats {
-    font-size: 0.5rem;
+    font-size: 0.45rem;
   }
 
   .week-dash__day-badge {
-    font-size: 0.38rem;
-    padding: 1px 3px;
-    top: 2px;
-    right: 2px;
+    font-size: 0.32rem;
+    padding: 0px 2px;
+    top: 1px;
+    right: 1px;
+    letter-spacing: 0;
   }
 
   .week-dash__detail {
     padding: 14px 10px;
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
     overflow-x: hidden;
   }
 
@@ -852,6 +858,7 @@
   .week-dash__habits {
     width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .week-dash__habits-grid {
@@ -862,9 +869,9 @@
   }
 
   .week-dash__habits-row {
-    grid-template-columns: 120px repeat(7, 26px) 36px 24px;
-    min-width: 380px;
-    gap: 4px;
+    grid-template-columns: 110px repeat(7, 24px) 34px 22px;
+    min-width: 340px;
+    gap: 3px;
   }
 
   .week-dash__habit-add {
