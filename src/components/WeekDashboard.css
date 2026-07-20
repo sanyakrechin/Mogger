@@ -801,11 +801,56 @@
 }
 
 @media (max-width: 640px) {
+  .week-dash {
+    gap: 16px;
+  }
+
   .week-dash__strip {
     grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    width: 100%;
+  }
+
+  .week-dash__day-card {
+    padding: 8px 2px;
+    min-width: 0; /* Prevents grid cell expansion */
+  }
+
+  .week-dash__day-name {
+    font-size: 0.45rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .week-dash__day-label {
+    font-size: 0.55rem;
+  }
+
+  .week-dash__day-date {
+    font-size: 0.6rem;
+  }
+
+  .week-dash__detail {
+    padding: 16px 12px;
+  }
+
+  .week-dash__detail-title {
+    font-size: 1rem;
   }
 
   .week-dash__detail-header {
     flex-direction: column;
+    gap: 10px;
+  }
+
+  .week-dash__detail-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .week-dash__habit-add {
+    padding: 8px 12px 12px;
   }
 }
