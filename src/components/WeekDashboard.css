@@ -365,13 +365,15 @@
 .week-dash__template-picker {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
+  right: auto;
   z-index: 100;
   background: var(--bg-surface);
   border: 1px solid var(--border-active);
   padding: 4px;
-  min-width: 200px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  min-width: 190px;
+  max-width: calc(100vw - 32px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 240, 255, 0.2);
   animation: fadeIn 0.15s ease-out;
   margin-top: 4px;
 }
