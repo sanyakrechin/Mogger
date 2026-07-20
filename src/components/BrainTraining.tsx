@@ -101,10 +101,10 @@ function SprintTab({ onComplete }: { onComplete: () => void }) {
       </div>
       
       <select
+        className="bt-select"
         value={selectedTask}
         onChange={e => setSelectedTask(e.target.value)}
         disabled={isActive}
-        style={{ width: '300px', background: 'var(--bg-deepspace)' }}
       >
         <option value="">-- Выбрать задачу --</option>
         {activeTasks.map(t => (

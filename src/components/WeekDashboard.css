@@ -787,8 +787,15 @@
     font-size: 0.45rem;
   }
 
+  .week-dash__habits-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
   .week-dash__habits-row {
-    grid-template-columns: 120px repeat(7, 26px) 40px 24px;
+    grid-template-columns: 130px repeat(7, 28px) 40px 24px;
+    min-width: 420px;
     gap: 4px;
   }
 }
@@ -800,10 +807,5 @@
 
   .week-dash__detail-header {
     flex-direction: column;
-  }
-
-  .week-dash__habits-row {
-    grid-template-columns: 1fr;
-    gap: 8px;
   }
 }

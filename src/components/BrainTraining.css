@@ -163,16 +163,81 @@
   border-color: var(--cyan);
 }
 
-.bt-history {
-  width: 100%;
-  margin-top: 24px;
+.bt-select {
+  width: 300px;
+  max-width: 100%;
+  background: var(--bg-deepspace);
+  border: 1px solid var(--border-ghost);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  font-family: var(--font-body);
 }
 
-.bt-history-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  border-bottom: 1px solid var(--border-subtle);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
+/* ===== MOBILE RESPONSIVENESS ===== */
+@media (max-width: 768px) {
+  .brain-training {
+    gap: 12px;
+  }
+
+  .bt-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .bt-tab {
+    padding: 8px 2px;
+    font-size: 0.55rem;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    gap: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .bt-panel {
+    padding: 16px 12px;
+    gap: 14px;
+    min-height: auto;
+  }
+
+  .bt-timer-display {
+    width: 160px;
+    height: 160px;
+  }
+
+  .bt-timer-text {
+    font-size: 2.8rem;
+  }
+
+  .bt-breathe-container {
+    width: 200px;
+    height: 200px;
+  }
+
+  .bt-breathe-circle--inhale,
+  .bt-breathe-circle--hold {
+    width: 200px;
+    height: 200px;
+  }
+
+  .bt-breathe-circle--exhale {
+    width: 90px;
+    height: 90px;
+  }
+
+  .bt-breathe-text {
+    font-size: 1.1rem;
+  }
+
+  .bt-select {
+    width: 100%;
+  }
+
+  .bt-durations {
+    width: 100%;
+    justify-content: center;
+  }
 }
