@@ -83,7 +83,10 @@ function SprintTab({ onComplete }: { onComplete: () => void }) {
   const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const secs = (timeLeft % 60).toString().padStart(2, '0');
 
-  const activeTasks = state.tasks.filter(t => !t.completed);
+  // Get today's active tasks from day instance
+  const todayDate = new Date().toISOString().split('T')[0];
+  const todayInstance = state.dayInstances.find(d => d.date === todayDate);
+  const activeTasks = todayInstance ? todayInstance.tasks.filter(t => !t.completed) : [];
 
   // Weekly progress
   const now = new Date();

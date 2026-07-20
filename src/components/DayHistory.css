@@ -1,0 +1,218 @@
+/* DayHistory.css */
+
+.day-history {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Week Nav */
+.day-history__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.day-history__nav-btn {
+  background: transparent;
+  border: 1px solid var(--border-ghost);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  transition: all 0.2s;
+}
+
+.day-history__nav-btn:hover:not(:disabled) {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.day-history__nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.day-history__nav-label {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+}
+
+/* Grid */
+.day-history__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.day-history__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.day-history__card:hover {
+  border-color: var(--card-color);
+}
+
+.day-history__card--selected {
+  border-color: var(--card-color) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--card-color) 30%, transparent);
+}
+
+.day-history__card--today {
+  border-bottom: 3px solid var(--cyan);
+}
+
+.day-history__card--empty {
+  opacity: 0.4;
+}
+
+.day-history__card-day {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+.day-history__card-date {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+}
+
+.day-history__card-icon {
+  font-size: 1.2rem;
+}
+
+.day-history__card-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.day-history__card-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+
+.day-history__card-stats {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+.day-history__card-complete {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  color: var(--green);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* Detail */
+.day-history__detail {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.day-history__detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.day-history__detail-icon {
+  font-size: 2rem;
+}
+
+.day-history__detail-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.day-history__detail-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.day-history__detail-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.day-history__detail-task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-ghost);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.day-history__detail-task--done {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.day-history__detail-check {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.day-history__detail-check--done {
+  color: var(--green);
+}
+
+.day-history__detail-badge {
+  margin-left: auto;
+  font-family: var(--font-heading);
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border: 1px solid var(--border-ghost);
+  color: var(--text-dim);
+}
+
+.day-history__detail-summary {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+
+.day-history__empty {
+  text-align: center;
+  padding: 32px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 640px) {
+  .day-history__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

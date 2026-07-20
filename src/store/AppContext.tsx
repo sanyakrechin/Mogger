@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
-import type { AppState, AppAction, GamificationState } from './types';
+import type { AppState, AppAction, GamificationState, DayTemplate, WeekAssignment } from './types';
 
 // ====== XP & LEVEL SYSTEM ======
 export function calculateLevel(xp: number): number {
@@ -9,6 +9,69 @@ export function calculateLevel(xp: number): number {
 export function getXpForNextLevel(currentLevel: number): number {
   return Math.pow(currentLevel, 2) * 100;
 }
+
+// ====== DEFAULT TEMPLATES ======
+const defaultTemplates: DayTemplate[] = [
+  {
+    id: 'tpl-it',
+    name: 'IT-ДЕНЬ',
+    color: '#00f0ff',
+    icon: '💻',
+    defaultTasks: ['Написать код / коммит в проект', 'Пройти урок или документацию', 'Решить задачу на алгоритмы'],
+  },
+  {
+    id: 'tpl-sport',
+    name: 'СПОРТ',
+    color: '#00ff88',
+    icon: '💪',
+    defaultTasks: ['Тренировка (основная)', 'Растяжка / разминка', 'Контрастный душ'],
+  },
+  {
+    id: 'tpl-creative',
+    name: 'ТВОРЧЕСТВО',
+    color: '#8b5cf6',
+    icon: '🎨',
+    defaultTasks: ['Работа над творческим проектом', 'Изучить референсы / вдохновение', 'Практика навыка'],
+  },
+  {
+    id: 'tpl-business',
+    name: 'БИЗНЕС',
+    color: '#f59e0b',
+    icon: '📈',
+    defaultTasks: ['Работа над бизнес-задачей', 'Нетворкинг / переговоры', 'Анализ метрик'],
+  },
+  {
+    id: 'tpl-study',
+    name: 'ОБУЧЕНИЕ',
+    color: '#ff3366',
+    icon: '📚',
+    defaultTasks: ['Чтение / изучение материала', 'Конспект / заметки', 'Практика изученного'],
+  },
+  {
+    id: 'tpl-personal',
+    name: 'ЛИЧНОЕ',
+    color: '#d0bcff',
+    icon: '🧘',
+    defaultTasks: ['Время для себя', 'Медитация / рефлексия'],
+  },
+  {
+    id: 'tpl-rest',
+    name: 'ОТДЫХ',
+    color: '#849495',
+    icon: '☁️',
+    defaultTasks: ['Прогулка', 'Хобби без экранов'],
+  },
+];
+
+const defaultWeekAssignments: WeekAssignment[] = [
+  { dayIndex: 0, templateId: 'tpl-it' },
+  { dayIndex: 1, templateId: 'tpl-creative' },
+  { dayIndex: 2, templateId: 'tpl-business' },
+  { dayIndex: 3, templateId: 'tpl-sport' },
+  { dayIndex: 4, templateId: 'tpl-study' },
+  { dayIndex: 5, templateId: 'tpl-personal' },
+  { dayIndex: 6, templateId: 'tpl-rest' },
+];
 
 // ====== DEFAULT STATE ======
 const defaultGamification: GamificationState = {
@@ -22,29 +85,21 @@ const defaultGamification: GamificationState = {
 };
 
 const defaultState: AppState = {
-  tasks: [],
-  emotions: [],
-  sprints: [],
-  meditations: [],
-  delays: [],
-  daySplits: [
-    { dayIndex: 0, sphere: 'Программирование', color: '#00f0ff' },
-    { dayIndex: 1, sphere: 'Творчество', color: '#8b5cf6' },
-    { dayIndex: 2, sphere: 'Бизнес', color: '#f59e0b' },
-    { dayIndex: 3, sphere: 'Спорт', color: '#00ff88' },
-    { dayIndex: 4, sphere: 'Обучение', color: '#ff3366' },
-    { dayIndex: 5, sphere: 'Личное', color: '#d0bcff' },
-    { dayIndex: 6, sphere: 'Отдых', color: '#849495' },
-  ],
+  templates: defaultTemplates,
+  weekAssignments: defaultWeekAssignments,
+  dayInstances: [],
   habits: [
     { id: '1', name: 'Контрастный душ', icon: '🚿', checkedDates: [] },
     { id: '2', name: 'Чтение 30 мин', icon: '📖', checkedDates: [] },
     { id: '3', name: 'Без гаджетов утром', icon: '📵', checkedDates: [] },
     { id: '4', name: 'Тренировка', icon: '💪', checkedDates: [] },
   ],
+  emotions: [],
+  sprints: [],
+  meditations: [],
+  delays: [],
   gamification: defaultGamification,
-  spheres: ['Программирование', 'Творчество', 'Бизнес', 'Спорт', 'Обучение', 'Личное', 'Отдых'],
-  activeTab: 'dashboard',
+  activeTab: 'home',
 };
 
 // ====== REDUCER ======
@@ -53,89 +108,115 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'SET_TAB':
       return { ...state, activeTab: action.tab };
 
-    case 'ADD_TASK':
-      return { ...state, tasks: [...state.tasks, action.task] };
+    // ── Templates ──
+    case 'ADD_TEMPLATE':
+      return { ...state, templates: [...state.templates, action.template] };
 
-    case 'TOGGLE_TASK_COMPLETION':
+    case 'UPDATE_TEMPLATE':
       return {
         ...state,
-        tasks: state.tasks.map(t =>
-          t.id === action.id ? { ...t, completed: !t.completed } : t
+        templates: state.templates.map(t =>
+          t.id === action.template.id ? action.template : t
         ),
       };
 
-    case 'DELETE_TASK':
+    case 'DELETE_TEMPLATE':
       return {
         ...state,
-        tasks: state.tasks.filter(t => t.id !== action.id),
+        templates: state.templates.filter(t => t.id !== action.id),
+        weekAssignments: state.weekAssignments.filter(a => a.templateId !== action.id),
       };
 
-    case 'ADD_EMOTION': {
-      const today = new Date().toISOString().split('T')[0];
-      const isNewDay = state.gamification.lastEntryDate !== today;
-      const wasYesterday = (() => {
-        if (!state.gamification.lastEntryDate) return false;
-        const last = new Date(state.gamification.lastEntryDate);
-        const now = new Date(today);
-        const diff = (now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24);
-        return diff === 1;
-      })();
-      const newStreak = isNewDay ? (wasYesterday ? state.gamification.streak + 1 : 1) : state.gamification.streak;
-      const bonusXP = action.entry.text.length > 100 ? 25 : 0;
-      const streakBonus = newStreak >= 7 ? 20 : newStreak >= 3 ? 10 : 0;
-      const totalXP = 50 + bonusXP + streakBonus;
-      const newXP = state.gamification.xp + totalXP;
-      const newLevel = calculateLevel(newXP);
-
-      const newSounds = [...state.gamification.unlockedSounds];
-      const newThemes = [...state.gamification.unlockedThemes];
-      if (newLevel >= 3 && !newSounds.includes('lofi')) newSounds.push('lofi');
-      if (newLevel >= 5 && !newSounds.includes('rain')) newSounds.push('rain');
-      if (newLevel >= 7 && !newSounds.includes('ocean')) newSounds.push('ocean');
-      if (newLevel >= 2 && !newThemes.includes('neon-zen')) newThemes.push('neon-zen');
-      if (newLevel >= 4 && !newThemes.includes('cyberpunk-dusk')) newThemes.push('cyberpunk-dusk');
-      if (newLevel >= 6 && !newThemes.includes('emerald-forest')) newThemes.push('emerald-forest');
-
+    // ── Week Assignments ──
+    case 'SET_WEEK_ASSIGNMENT': {
+      const existing = state.weekAssignments.find(a => a.dayIndex === action.dayIndex);
+      if (existing) {
+        return {
+          ...state,
+          weekAssignments: state.weekAssignments.map(a =>
+            a.dayIndex === action.dayIndex ? { ...a, templateId: action.templateId } : a
+          ),
+        };
+      }
       return {
         ...state,
-        emotions: [...state.emotions, action.entry],
-        gamification: {
-          ...state.gamification,
-          xp: newXP,
-          level: newLevel,
-          streak: newStreak,
-          lastEntryDate: today,
-          unlockedSounds: newSounds,
-          unlockedThemes: newThemes,
-        },
+        weekAssignments: [...state.weekAssignments, { dayIndex: action.dayIndex, templateId: action.templateId }],
       };
     }
 
-    case 'DELETE_EMOTION':
+    case 'REMOVE_WEEK_ASSIGNMENT':
       return {
         ...state,
-        emotions: state.emotions.filter(e => e.id !== action.id),
+        weekAssignments: state.weekAssignments.filter(a => a.dayIndex !== action.dayIndex),
       };
 
-    case 'ADD_SPRINT':
-      return { ...state, sprints: [...state.sprints, action.session] };
+    // ── Day Instances ──
+    case 'INIT_DAY': {
+      const exists = state.dayInstances.find(d => d.date === action.date);
+      if (exists) return state;
+      const template = state.templates.find(t => t.id === action.templateId);
+      const tasks = template
+        ? template.defaultTasks.map((title, i) => ({
+            id: `${action.date}-default-${i}`,
+            title,
+            isDefault: true,
+            completed: false,
+          }))
+        : [];
+      return {
+        ...state,
+        dayInstances: [
+          ...state.dayInstances,
+          { date: action.date, templateId: action.templateId, tasks, completed: false },
+        ],
+      };
+    }
 
-    case 'ADD_MEDITATION':
-      return { ...state, meditations: [...state.meditations, action.session] };
+    case 'ADD_DAY_TASK': {
+      return {
+        ...state,
+        dayInstances: state.dayInstances.map(d =>
+          d.date === action.date
+            ? { ...d, tasks: [...d.tasks, action.task] }
+            : d
+        ),
+      };
+    }
 
-    case 'ADD_DELAY':
-      return { ...state, delays: [...state.delays, action.entry] };
+    case 'TOGGLE_DAY_TASK':
+      return {
+        ...state,
+        dayInstances: state.dayInstances.map(d =>
+          d.date === action.date
+            ? {
+                ...d,
+                tasks: d.tasks.map(t =>
+                  t.id === action.taskId ? { ...t, completed: !t.completed } : t
+                ),
+              }
+            : d
+        ),
+      };
 
-    case 'SET_DAY_SPLITS':
-      return { ...state, daySplits: action.splits };
+    case 'DELETE_DAY_TASK':
+      return {
+        ...state,
+        dayInstances: state.dayInstances.map(d =>
+          d.date === action.date
+            ? { ...d, tasks: d.tasks.filter(t => t.id !== action.taskId) }
+            : d
+        ),
+      };
 
-    case 'ADD_SPHERE':
-      if (state.spheres.includes(action.sphere)) return state;
-      return { ...state, spheres: [...state.spheres, action.sphere] };
+    case 'COMPLETE_DAY':
+      return {
+        ...state,
+        dayInstances: state.dayInstances.map(d =>
+          d.date === action.date ? { ...d, completed: true } : d
+        ),
+      };
 
-    case 'REMOVE_SPHERE':
-      return { ...state, spheres: state.spheres.filter(s => s !== action.sphere) };
-
+    // ── Habits ──
     case 'ADD_HABIT':
       return { ...state, habits: [...state.habits, action.habit] };
 
@@ -154,6 +235,51 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'DELETE_HABIT':
       return { ...state, habits: state.habits.filter(h => h.id !== action.id) };
 
+    // ── Emotions ──
+    case 'ADD_EMOTION': {
+      const today = new Date().toISOString().split('T')[0];
+      const isNewDay = state.gamification.lastEntryDate !== today;
+      const wasYesterday = (() => {
+        if (!state.gamification.lastEntryDate) return false;
+        const last = new Date(state.gamification.lastEntryDate);
+        const now = new Date(today);
+        const diff = (now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24);
+        return diff === 1;
+      })();
+      const newStreak = isNewDay ? (wasYesterday ? state.gamification.streak + 1 : 1) : state.gamification.streak;
+      const bonusXP = action.entry.text.length > 100 ? 25 : 0;
+      const streakBonus = newStreak >= 7 ? 20 : newStreak >= 3 ? 10 : 0;
+      const totalXP = 50 + bonusXP + streakBonus;
+      const newXP = state.gamification.xp + totalXP;
+      const newLevel = calculateLevel(newXP);
+
+      return {
+        ...state,
+        emotions: [...state.emotions, action.entry],
+        gamification: {
+          ...state.gamification,
+          xp: newXP,
+          level: newLevel,
+          streak: newStreak,
+          lastEntryDate: today,
+        },
+      };
+    }
+
+    case 'DELETE_EMOTION':
+      return { ...state, emotions: state.emotions.filter(e => e.id !== action.id) };
+
+    // ── Training ──
+    case 'ADD_SPRINT':
+      return { ...state, sprints: [...state.sprints, action.session] };
+
+    case 'ADD_MEDITATION':
+      return { ...state, meditations: [...state.meditations, action.session] };
+
+    case 'ADD_DELAY':
+      return { ...state, delays: [...state.delays, action.entry] };
+
+    // ── Gamification ──
     case 'ADD_XP': {
       const newXP = state.gamification.xp + action.amount;
       return {
@@ -170,7 +296,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
       const exists = state.gamification.achievements.find(a => a.id === action.id);
       let newAchievements;
       if (exists) {
-        newAchievements = state.gamification.achievements.map(a => 
+        newAchievements = state.gamification.achievements.map(a =>
           a.id === action.id ? { ...a, level: action.level } : a
         );
       } else {
@@ -180,8 +306,8 @@ function appReducer(state: AppState, action: AppAction): AppState {
         ...state,
         gamification: {
           ...state.gamification,
-          achievements: newAchievements
-        }
+          achievements: newAchievements,
+        },
       };
     }
 
@@ -203,7 +329,7 @@ const AppContext = createContext<{
 });
 
 // ====== PROVIDER ======
-const STORAGE_KEY = 'mogger-app-state';
+const STORAGE_KEY = 'mogger-v2-state';
 
 function loadState(): AppState {
   try {
@@ -221,7 +347,6 @@ function loadState(): AppState {
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, null, loadState);
 
-  // Persist to localStorage on every state change
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -241,28 +366,19 @@ export function useAppState() {
   return useContext(AppContext);
 }
 
-// ====== SELECTORS ======
-export function getCognitiveLoad(tasks: AppState['tasks']): number {
-  const activeTasks = tasks.filter(t => !t.completed);
-  let load = 0;
-  for (const t of activeTasks) {
-    load += t.category === 'immediate' ? 3 : 10;
-  }
-  return Math.min(load, 100);
+// ====== HELPERS ======
+export function getTodayISO(): string {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
-export function getLoadStatus(load: number): {
-  label: string;
-  color: string;
-  level: 'clear' | 'moderate' | 'high' | 'overload';
-} {
-  if (load <= 30) return { label: 'МЕНТАЛЬНАЯ ЯСНОСТЬ', color: '#00ff88', level: 'clear' };
-  if (load <= 70) return { label: 'УМЕРЕННАЯ НАГРУЗКА', color: '#f59e0b', level: 'moderate' };
-  if (load <= 90) return { label: 'ВЫСОКАЯ НАГРУЗКА', color: '#8b5cf6', level: 'high' };
-  return { label: 'ПЕРЕГРУЗКА!', color: '#ff3366', level: 'overload' };
+export function getTodayIndex(): number {
+  return (new Date().getDay() + 6) % 7; // Mon=0, Sun=6
 }
 
-export function getTodaySphere(splits: AppState['daySplits']): AppState['daySplits'][0] | undefined {
-  const dayIndex = (new Date().getDay() + 6) % 7; // Convert Sun=0 to Mon=0
-  return splits.find(s => s.dayIndex === dayIndex);
+export function getDateIndex(dateStr: string): number {
+  return (new Date(dateStr).getDay() + 6) % 7;
 }

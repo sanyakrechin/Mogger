@@ -1,10 +1,10 @@
 import Sidebar from './components/Sidebar';
-import BrainDump from './components/BrainDump';
+import WeekDashboard from './components/WeekDashboard';
+import DayHistory from './components/DayHistory';
 import EmotionJournal from './components/EmotionJournal';
 import BrainTraining from './components/BrainTraining';
-import DaySplit from './components/DaySplit';
 import Settings from './components/Settings';
-import { useAppState, getTodaySphere } from './store/AppContext';
+import { useAppState, getTodayIndex } from './store/AppContext';
 import './App.css';
 
 const DAY_NAMES = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
@@ -26,18 +26,20 @@ function formatTime(): string {
 
 function renderTab(tab: string) {
   switch (tab) {
-    case 'dashboard': return <BrainDump />;
+    case 'home': return <WeekDashboard />;
+    case 'history': return <DayHistory />;
     case 'emotions': return <EmotionJournal />;
     case 'training': return <BrainTraining />;
-    case 'splits': return <DaySplit />;
     case 'settings': return <Settings />;
-    default: return <BrainDump />;
+    default: return <WeekDashboard />;
   }
 }
 
 export default function App() {
   const { state } = useAppState();
-  const todaySphere = getTodaySphere(state.daySplits);
+  const todayIndex = getTodayIndex();
+  const assignment = state.weekAssignments.find(a => a.dayIndex === todayIndex);
+  const todayTemplate = assignment ? state.templates.find(t => t.id === assignment.templateId) : undefined;
 
   return (
     <div className="app">
@@ -46,12 +48,12 @@ export default function App() {
         <header className="app__header">
           <div className="app__header-left">
             <span className="app__date">{formatDate()}</span>
-            {todaySphere && (
+            {todayTemplate && (
               <span
                 className="app__split-badge"
-                style={{ borderColor: todaySphere.color + '40', color: todaySphere.color }}
+                style={{ borderColor: todayTemplate.color + '40', color: todayTemplate.color }}
               >
-                {todaySphere.sphere}
+                {todayTemplate.icon} {todayTemplate.name}
               </span>
             )}
           </div>

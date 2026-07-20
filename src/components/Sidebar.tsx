@@ -1,24 +1,26 @@
-import { Brain, Heart, Zap, Calendar, Settings } from 'lucide-react';
-import { useAppState, getTodaySphere } from '../store/AppContext';
+import { Home, Heart, Zap, CalendarDays, Settings } from 'lucide-react';
+import { useAppState, getTodayIndex } from '../store/AppContext';
 import './Sidebar.css';
 
 const NAV_ITEMS = [
-  { id: 'dashboard', label: 'Дашборд', icon: Brain },
+  { id: 'home', label: 'Главная', icon: Home },
+  { id: 'history', label: 'История', icon: CalendarDays },
   { id: 'emotions', label: 'Эмоции', icon: Heart },
   { id: 'training', label: 'Тренинг', icon: Zap },
-  { id: 'splits', label: 'Сплиты', icon: Calendar },
   { id: 'settings', label: 'Настройки', icon: Settings },
 ];
 
 export default function Sidebar() {
   const { state, dispatch } = useAppState();
-  const todaySphere = getTodaySphere(state.daySplits);
+  const todayIndex = getTodayIndex();
+  const assignment = state.weekAssignments.find(a => a.dayIndex === todayIndex);
+  const todayTemplate = assignment ? state.templates.find(t => t.id === assignment.templateId) : undefined;
 
   return (
     <aside className="sidebar">
       <div className="sidebar__logo">
         <div className="sidebar__logo-text">МОГГЕР</div>
-        <div className="sidebar__logo-sub">BRAIN.OS v1.0</div>
+        <div className="sidebar__logo-sub">BRAIN.OS v2.0</div>
       </div>
 
       <nav className="sidebar__nav">
@@ -34,11 +36,11 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {todaySphere && (
+      {todayTemplate && (
         <div className="sidebar__split">
           <div className="sidebar__split-label">Сегодня</div>
-          <div className="sidebar__split-value" style={{ color: todaySphere.color }}>
-            {todaySphere.sphere}
+          <div className="sidebar__split-value" style={{ color: todayTemplate.color }}>
+            {todayTemplate.icon} {todayTemplate.name}
           </div>
         </div>
       )}

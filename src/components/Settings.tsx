@@ -3,8 +3,8 @@ import { getXpForNextLevel } from '../store/AppContext';
 import './Settings.css';
 
 const ACHIEVEMENTS_DEF = [
-  { id: 'first_task', icon: '📝', title: 'Первый Шаг', desc: 'Добавить задачу в дашборд', tiers: [5, 25, 50] },
-  { id: 'clear_mind', icon: '⚡', title: 'Чистый Разум', desc: 'Завершить срочные задачи', tiers: [25, 100, 250] },
+  { id: 'day_tasks', icon: '📝', title: 'Трудяга', desc: 'Выполнить задачи за день', tiers: [5, 25, 50] },
+  { id: 'day_complete', icon: '⚡', title: 'Идеальный День', desc: 'Полностью закрыть дни', tiers: [5, 20, 50] },
   { id: 'iron_will', icon: '🛡️', title: 'Железная Воля', desc: 'Выдержать сессии отсрочки', tiers: [15, 50, 150] },
   { id: 'zen_master', icon: '🧘', title: 'Мастер Дзена', desc: 'Минут в медитации дыхания', tiers: [300, 1500, 5000] },
   { id: 'eq_master', icon: '💜', title: 'Эмоциональный Интеллект', desc: 'Записей в дневник эмоций', tiers: [35, 150, 500] },
@@ -23,8 +23,12 @@ export default function Settings() {
   // Compute progress for each achievement based on state
   const getProgress = (id: string) => {
     switch(id) {
-      case 'first_task': return state.tasks.length;
-      case 'clear_mind': return state.tasks.filter(t => t.category === 'immediate' && t.completed).length;
+      case 'day_tasks': {
+        let total = 0;
+        state.dayInstances.forEach(d => { total += d.tasks.filter(t => t.completed).length; });
+        return total;
+      }
+      case 'day_complete': return state.dayInstances.filter(d => d.tasks.length > 0 && d.tasks.every(t => t.completed)).length;
       case 'iron_will': return state.delays.filter(d => d.resisted).length;
       case 'zen_master': return Math.floor(state.meditations.reduce((acc, m) => acc + m.durationSeconds, 0) / 60);
       case 'eq_master': return state.emotions.length;

@@ -1,0 +1,809 @@
+/* WeekDashboard.css */
+
+/* ═══════ WEEK STRIP ═══════ */
+.week-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.week-dash__strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.week-dash__day-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.week-dash__day-card:hover {
+  border-color: var(--day-color);
+  background: var(--bg-card-hover);
+}
+
+.week-dash__day-card--selected {
+  border-color: var(--day-color) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--day-color) 30%, transparent),
+              inset 0 0 30px color-mix(in srgb, var(--day-color) 8%, transparent);
+}
+
+.week-dash__day-card--today {
+  border-bottom: 3px solid var(--day-color);
+}
+
+.week-dash__day-label {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.week-dash__day-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.week-dash__day-icon {
+  font-size: 1.4rem;
+  margin: 4px 0;
+}
+
+.week-dash__day-name {
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--day-color);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.week-dash__day-progress {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.week-dash__day-progress-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 2px;
+}
+
+.week-dash__day-stats {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+}
+
+.week-dash__day-empty {
+  font-size: 1.2rem;
+  color: var(--text-dim);
+  margin: 10px 0;
+}
+
+.week-dash__day-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: var(--font-heading);
+  font-size: 0.45rem;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  background: var(--day-color);
+  color: var(--bg-deepspace);
+  font-weight: 700;
+}
+
+/* ═══════ DAY DETAIL ═══════ */
+.week-dash__detail {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.week-dash__detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.week-dash__detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.week-dash__detail-icon {
+  font-size: 2rem;
+}
+
+.week-dash__detail-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.week-dash__detail-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.week-dash__detail-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.week-dash__action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--border-ghost);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.week-dash__action-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Progress */
+.week-dash__progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.week-dash__progress-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.week-dash__progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.week-dash__progress-text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* Tasks */
+.week-dash__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.week-dash__task-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.week-dash__task-group-label {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  padding-left: 4px;
+}
+
+.week-dash__task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-ghost);
+  transition: all 0.2s ease;
+}
+
+.week-dash__task:hover {
+  background: var(--bg-card-hover);
+}
+
+.week-dash__task--done {
+  opacity: 0.5;
+}
+
+.week-dash__task--done .week-dash__task-title {
+  text-decoration: line-through;
+}
+
+.week-dash__task-check {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-ghost);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.week-dash__task-check:hover {
+  border-color: var(--cyan);
+}
+
+.week-dash__task-check--checked {
+  border-color: var(--cyan);
+  background: var(--cyan);
+}
+
+.week-dash__task-title {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.week-dash__task-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+  display: flex;
+}
+
+.week-dash__task-delete:hover {
+  color: var(--red);
+}
+
+.week-dash__empty {
+  text-align: center;
+  padding: 40px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+/* Add task */
+.week-dash__add-task {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.week-dash__add-input {
+  flex: 1;
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  padding: 10px 14px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border-ghost) !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+}
+
+.week-dash__add-input:focus {
+  border-color: var(--cyan) !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.15) !important;
+}
+
+.week-dash__add-input::placeholder {
+  font-family: var(--font-mono) !important;
+  color: var(--text-dim) !important;
+  font-size: 0.8rem !important;
+}
+
+.week-dash__add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.week-dash__add-btn:hover {
+  background: var(--cyan);
+  color: var(--bg-deepspace);
+  box-shadow: var(--cyan-glow);
+}
+
+.week-dash__add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ═══════ TEMPLATE PICKER ═══════ */
+.week-dash__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+.week-dash__template-picker {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-active);
+  padding: 4px;
+  min-width: 200px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.15s ease-out;
+  margin-top: 4px;
+}
+
+.week-dash__template-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.week-dash__template-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.week-dash__template-option--active {
+  background: rgba(0, 240, 255, 0.08);
+}
+
+/* ═══════ MODAL (Template Editor) ═══════ */
+.week-dash__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.week-dash__modal {
+  width: 100%;
+  max-width: 520px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.week-dash__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-ghost);
+}
+
+.week-dash__modal-header h3 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  margin: 0;
+}
+
+.week-dash__modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+  display: flex;
+}
+
+.week-dash__modal-close:hover {
+  color: var(--red);
+}
+
+.week-dash__modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.week-dash__modal-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.week-dash__icon-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border-ghost);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.week-dash__icon-btn:hover {
+  border-color: var(--cyan);
+}
+
+.week-dash__modal-input {
+  flex: 1;
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  padding: 10px 14px !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border-ghost) !important;
+  color: var(--text-primary) !important;
+  outline: none !important;
+}
+
+.week-dash__modal-input:focus {
+  border-color: var(--cyan) !important;
+}
+
+.week-dash__color-input {
+  width: 48px;
+  height: 48px;
+  padding: 2px;
+  border: 1px solid var(--border-ghost);
+  background: var(--bg-card);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.week-dash__modal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.week-dash__modal-label {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+.week-dash__modal-task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-ghost);
+}
+
+.week-dash__modal-task-text {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.week-dash__modal-task-del {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  transition: color 0.2s;
+}
+
+.week-dash__modal-task-del:hover {
+  color: var(--red);
+}
+
+.week-dash__modal-add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.week-dash__modal-add-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--cyan);
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--cyan);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.week-dash__modal-add-btn:hover {
+  background: var(--cyan);
+  color: var(--bg-deepspace);
+}
+
+.week-dash__modal-add-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.week-dash__modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-ghost);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Emoji picker */
+.week-dash__emoji-picker {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  z-index: 200;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-active);
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.15s ease-out;
+  margin-bottom: 4px;
+}
+
+.week-dash__emoji-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.week-dash__emoji-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.15);
+}
+
+/* ═══════ HABIT TRACKER ═══════ */
+.week-dash__habits {
+  padding: 0;
+  overflow: hidden;
+}
+
+.week-dash__habits-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--text-secondary);
+}
+
+.week-dash__habits-header:hover {
+  background: var(--bg-card-hover);
+}
+
+.week-dash__habits-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--cyan);
+}
+
+.week-dash__habits-grid {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 8px;
+}
+
+.week-dash__habits-row {
+  display: grid;
+  grid-template-columns: 160px repeat(7, 32px) 50px 28px;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.week-dash__habits-row--header {
+  border-bottom: 1px solid var(--border-ghost);
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+
+.week-dash__habits-name {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.week-dash__habits-day-label {
+  font-family: var(--font-heading);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.week-dash__habits-day-label--today {
+  color: var(--cyan);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.week-dash__habit-cb {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-ghost);
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.week-dash__habit-cb:hover {
+  border-color: var(--cyan);
+}
+
+.week-dash__habit-cb--checked {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: var(--bg-deepspace);
+}
+
+.week-dash__habit-cb--today {
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
+}
+
+.week-dash__habits-pct {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.week-dash__habits-pct--full {
+  color: var(--green);
+  text-shadow: 0 0 6px rgba(0, 255, 136, 0.4);
+}
+
+.week-dash__habits-pct--mid {
+  color: var(--cyan);
+}
+
+.week-dash__habit-del {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.week-dash__habit-del:hover {
+  color: var(--red);
+}
+
+.week-dash__habit-add {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 16px;
+  align-items: center;
+}
+
+.week-dash__habit-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-ghost);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.week-dash__habit-icon-btn:hover {
+  border-color: var(--cyan);
+}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media (max-width: 900px) {
+  .week-dash__strip {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .week-dash__day-card {
+    padding: 10px 4px;
+  }
+
+  .week-dash__day-name {
+    font-size: 0.45rem;
+  }
+
+  .week-dash__habits-row {
+    grid-template-columns: 120px repeat(7, 26px) 40px 24px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .week-dash__strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .week-dash__detail-header {
+    flex-direction: column;
+  }
+
+  .week-dash__habits-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

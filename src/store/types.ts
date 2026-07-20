@@ -1,13 +1,39 @@
-// ====== TASK SYSTEM ======
-export type TaskCategory = 'immediate' | 'scheduled';
+// ====== DAY TEMPLATE ======
+export interface DayTemplate {
+  id: string;
+  name: string;          // "IT-ДЕНЬ", "СПОРТ", "ТВОРЧЕСТВО"
+  color: string;         // Hex color
+  icon: string;          // Emoji
+  defaultTasks: string[]; // Default task titles for this template
+}
 
-export interface Task {
+// ====== WEEK ASSIGNMENT ======
+export interface WeekAssignment {
+  dayIndex: number;      // 0=Mon, 1=Tue, ..., 6=Sun
+  templateId: string;    // Reference to DayTemplate.id
+}
+
+// ====== DAY INSTANCE ======
+export interface DayTask {
   id: string;
   title: string;
-  category: TaskCategory;
-  sphere: string;
+  isDefault: boolean;    // true = from template, false = manually added
   completed: boolean;
-  createdAt: string;
+}
+
+export interface DayInstance {
+  date: string;          // ISO date, e.g. "2026-07-21"
+  templateId: string;
+  tasks: DayTask[];
+  completed: boolean;    // Day closed / report submitted
+}
+
+// ====== HABITS ======
+export interface Habit {
+  id: string;
+  name: string;
+  icon: string;
+  checkedDates: string[]; // ISO date strings
 }
 
 // ====== EMOTION JOURNAL ======
@@ -41,21 +67,6 @@ export interface DelayEntry {
   createdAt: string;
 }
 
-// ====== DAY SPLITS ======
-export interface DaySplit {
-  dayIndex: number; // 0=Mon, 1=Tue, ..., 6=Sun
-  sphere: string;
-  color: string;
-}
-
-// ====== HABITS ======
-export interface Habit {
-  id: string;
-  name: string;
-  icon: string;
-  checkedDates: string[]; // ISO date strings
-}
-
 // ====== GAMIFICATION ======
 export interface Achievement {
   id: string;
@@ -74,35 +85,47 @@ export interface GamificationState {
 
 // ====== GLOBAL STATE ======
 export interface AppState {
-  tasks: Task[];
+  templates: DayTemplate[];
+  weekAssignments: WeekAssignment[];
+  dayInstances: DayInstance[];
+  habits: Habit[];
   emotions: EmotionEntry[];
   sprints: SprintSession[];
   meditations: MeditationSession[];
   delays: DelayEntry[];
-  daySplits: DaySplit[];
-  habits: Habit[];
   gamification: GamificationState;
-  spheres: string[];
   activeTab: string;
 }
 
 // ====== ACTIONS ======
 export type AppAction =
   | { type: 'SET_TAB'; tab: string }
-  | { type: 'ADD_TASK'; task: Task }
-  | { type: 'TOGGLE_TASK_COMPLETION'; id: string }
-  | { type: 'DELETE_TASK'; id: string }
-  | { type: 'ADD_EMOTION'; entry: EmotionEntry }
-  | { type: 'DELETE_EMOTION'; id: string }
-  | { type: 'ADD_SPRINT'; session: SprintSession }
-  | { type: 'ADD_MEDITATION'; session: MeditationSession }
-  | { type: 'ADD_DELAY'; entry: DelayEntry }
-  | { type: 'SET_DAY_SPLITS'; splits: DaySplit[] }
-  | { type: 'ADD_SPHERE'; sphere: string }
-  | { type: 'REMOVE_SPHERE'; sphere: string }
+  // Templates
+  | { type: 'ADD_TEMPLATE'; template: DayTemplate }
+  | { type: 'UPDATE_TEMPLATE'; template: DayTemplate }
+  | { type: 'DELETE_TEMPLATE'; id: string }
+  // Week assignments
+  | { type: 'SET_WEEK_ASSIGNMENT'; dayIndex: number; templateId: string }
+  | { type: 'REMOVE_WEEK_ASSIGNMENT'; dayIndex: number }
+  // Day instances
+  | { type: 'INIT_DAY'; date: string; templateId: string }
+  | { type: 'ADD_DAY_TASK'; date: string; task: DayTask }
+  | { type: 'TOGGLE_DAY_TASK'; date: string; taskId: string }
+  | { type: 'DELETE_DAY_TASK'; date: string; taskId: string }
+  | { type: 'COMPLETE_DAY'; date: string }
+  // Habits
   | { type: 'ADD_HABIT'; habit: Habit }
   | { type: 'TOGGLE_HABIT'; id: string; date: string }
   | { type: 'DELETE_HABIT'; id: string }
+  // Emotions
+  | { type: 'ADD_EMOTION'; entry: EmotionEntry }
+  | { type: 'DELETE_EMOTION'; id: string }
+  // Training
+  | { type: 'ADD_SPRINT'; session: SprintSession }
+  | { type: 'ADD_MEDITATION'; session: MeditationSession }
+  | { type: 'ADD_DELAY'; entry: DelayEntry }
+  // Gamification
   | { type: 'ADD_XP'; amount: number }
   | { type: 'UPDATE_ACHIEVEMENT'; id: string; level: number }
+  // System
   | { type: 'LOAD_STATE'; state: AppState };
