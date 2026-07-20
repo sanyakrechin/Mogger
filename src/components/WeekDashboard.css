@@ -862,16 +862,18 @@
   }
 
   .week-dash__habits-grid {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
     width: 100%;
+    padding: 0 4px 8px;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .week-dash__habits-row {
-    grid-template-columns: 110px repeat(7, 24px) 34px 22px;
-    min-width: 340px;
-    gap: 3px;
+    grid-template-columns: 85px repeat(7, 21px) 24px 18px;
+    min-width: 0;
+    width: 100%;
+    gap: 2px;
+    padding: 6px 0px;
   }
 
   .week-dash__habit-add {
