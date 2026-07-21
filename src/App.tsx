@@ -4,6 +4,7 @@ import DayHistory from './components/DayHistory';
 import EmotionJournal from './components/EmotionJournal';
 import BrainTraining from './components/BrainTraining';
 import Settings from './components/Settings';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import { useAppState, getTodayIndex } from './store/AppContext';
 import './App.css';
 
@@ -43,6 +44,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <PWAInstallPrompt />
       <Sidebar />
       <main className="app__content">
         <header className="app__header">

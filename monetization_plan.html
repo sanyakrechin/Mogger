@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mogger — Стратегия Развития & Монетизации</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0e1a;
+      --bg-surface: #0d1222;
+      --bg-card: rgba(255, 255, 255, 0.03);
+      --bg-card-hover: rgba(0, 240, 255, 0.06);
+      --cyan: #00f0ff;
+      --cyan-glow: 0 0 20px rgba(0, 240, 255, 0.4);
+      --violet: #8b5cf6;
+      --violet-glow: 0 0 20px rgba(139, 92, 246, 0.4);
+      --green: #00ff88;
+      --amber: #f59e0b;
+      --text-main: #dce4e5;
+      --text-muted: #849495;
+      --border-ghost: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(0, 240, 255, 0.4);
+      --font-head: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-active);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--green));
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--cyan);
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-family: var(--font-head);
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    /* Glass Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-ghost);
+      padding: 28px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: var(--card-color, var(--cyan));
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px color-mix(in srgb, var(--card-color, var(--cyan)) 20%, transparent);
+    }
+
+    .card__icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .card__tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--card-color, var(--cyan));
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .card__title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    .card__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card__list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .card__list-item::before {
+      content: '►';
+      color: var(--card-color, var(--cyan));
+      font-size: 0.7rem;
+      margin-top: 4px;
+    }
+
+    /* Highlight box inside cards */
+    .profit-box {
+      margin-top: 18px;
+      padding: 12px 14px;
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 3px solid var(--card-color, var(--cyan));
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--green);
+    }
+
+    /* Roadmap Section */
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: 0.1em;
+    }
+
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .roadmap-step {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-ghost);
+    }
+
+    .roadmap-step__num {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--cyan);
+      min-width: 45px;
+    }
+
+    .roadmap-step__content h4 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .roadmap-step__content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 20px 12px; }
+      .title { font-size: 1.6rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header class="header">
+    <span class="badge">SYSTEM STRATEGY v1.0</span>
+    <h1 class="title">MOGGER // МОНЕТИЗАЦИЯ & РОСТ</h1>
+    <p class="subtitle">План превращения персонального планера в источник дохода и аудитории</p>
+  </header>
+
+  <!-- Strategy Cards Grid -->
+  <div class="grid">
+
+    <!-- Card 1 -->
+    <div class="card" style="--card-color: var(--cyan);">
+      <span class="card__icon">🤖</span>
+      <div class="card__tag">ВЕКТОР 01 // TG ECOSYSTEM</div>
+      <h3 class="card__title">Telegram Mini App & Бот</h3>
+      <ul class="card__list">
+        <li class="card__list-item">Запуск Mogger прямо в Telegram через Mini App в 1 клик без установок</li>
+        <li class="card__list-item">Утренние и вечерние push-уведомления от бота с задачами на день</li>
+        <li class="card__list-item">Обязательное условие: подписка на твой Telegram-канал для бэкапа и тем</li>
+      </ul>
+      <div class="profit-box">
+        💰 ПРОФИТ: Бесплатный постоянный трафик в твой Telegram-канал (целевая IT/продуктивная аудитория).
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" style="--card-color: var(--violet);">
+      <span class="card__icon">📸</span>
+      <div class="card__tag">ВЕКТОР 02 // VIRAL LOOPS</div>
+      <h3 class="card__title">Виральный «Продуктивный Флекс»</h3>
+      <ul class="card__list">
+        <li class="card__list-item">Кнопка генерации стильной Cyberpunk-карточки итогов дня/недели для Stories</li>
+        <li class="card__list-item">На карточке: "IT-DAY CLOSED 100% | 7-DAY STREAK | LEVEL 4 MIND"</li>
+        <li class="card__list-item">Встроенный QR-код и водяной знак со ссылкой на твой канал на каждой карточке</li>
+      </ul>
+      <div class="profit-box" style="border-color: var(--violet); color: #d0bcff;">
+        🚀 ПРОФИТ: Бесплатный сарафанный маркетинг — пользователи сами рекламируют проект в соцсетях.
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card" style="--card-color: var(--green);">
+      <span class="card__icon">💎</span>
+      <div class="card__tag">ВЕКТОР 03 // DIGITAL ASSETS</div>
+      <h3 class="card__title">Продажа Рутин и Шаблонов</h3>
+      <ul class="card__list">
+        <li class="card__list-item">Готовые авторские сплиты: "Пачка Разработчика", "Дофаминовый Детокс", "Стартапер"</li>
+        <li class="card__list-item">Базовые шаблоны бесплатны, а продвинутые открываются за Telegram Stars или Рубли</li>
+        <li class="card__list-item">Возможность пользователям создавать и продавать свои наборы (маркетплейс)</li>
+      </ul>
+      <div class="profit-box" style="border-color: var(--green); color: var(--green);">
+        💵 ПРОФИТ: Прямые продажи цифровых товаров без затрат на логистику.
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card" style="--card-color: var(--amber);">
+      <span class="card__icon">⚡</span>
+      <div class="card__tag">ВЕКТОР 04 // SUBSCRIPTION</div>
+      <h3 class="card__title">Mogger PRO Подписка</h3>
+      <ul class="card__list">
+        <li class="card__list-item">Эксклюзивные Lo-Fi / Synthwave фокус-саундтреки для спринтов</li>
+        <li class="card__list-item">Премиальные темы оформления (Neon Matrix, Gold Cyber, Vaporwave)</li>
+        <li class="card__list-item">Облачная синхронизация между устройствами и годовая аналитика</li>
+      </ul>
+      <div class="profit-box" style="border-color: var(--amber); color: var(--amber);">
+        💳 ПРОФИТ: Регулярный подписочный доход (MRR) по 149-299 руб/месяц.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Roadmap Section -->
+  <h2 class="section-title">ПОШАГОВЫЙ ПЛАН ЗАПУСКА</h2>
+  
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="roadmap-step__num">01</div>
+      <div class="roadmap-step__content">
+        <h4>Запуск Telegram Mini App & Бота</h4>
+        <p>Подключение Telegram WebApp SDK, чтобы открывать Mogger внутри мессенджера и привязать канал.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-step">
+      <div class="roadmap-step__num">02</div>
+      <div class="roadmap-step__content">
+        <h4>Внедрение «Шеринга в Stories»</h4>
+        <p>Создание генератора красивых карточек прогресса с QR-кодом для соцсетей.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-step">
+      <div class="roadmap-step__num">03</div>
+      <div class="roadmap-step__content">
+        <h4>Анонс Челленджа и Трафик</h4>
+        <p>Запуск 30-дневного челленджа в Telegram-канале с привлечением первых участников.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-step">
+      <div class="roadmap-step__num">04</div>
+      <div class="roadmap-step__content">
+        <h4>Подключение Монетизации (Stars & PRO)</h4>
+        <p>Внедрение платных PRO-функций, эксклюзивных тем и магазина рутин.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>MOGGER STRATEGY DOC // BRAIN.OS v2.0</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
