@@ -360,10 +360,9 @@
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(10px) brightness(0.8);
-  -webkit-backdrop-filter: blur(10px) brightness(0.8);
-  animation: fadeIn 0.15s ease-out;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .week-dash__template-picker {
@@ -372,16 +371,16 @@
   left: 0;
   right: auto;
   z-index: 100;
-  background: linear-gradient(135deg, rgba(20, 26, 46, 0.75) 0%, rgba(10, 14, 28, 0.75) 100%);
-  backdrop-filter: blur(40px) saturate(220%);
-  -webkit-backdrop-filter: blur(40px) saturate(220%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 100%), rgba(14, 18, 36, 0.5);
+  backdrop-filter: blur(35px) saturate(220%);
+  -webkit-backdrop-filter: blur(35px) saturate(220%);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 20px;
   padding: 6px;
   min-width: 190px;
   max-width: calc(100vw - 32px);
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.45),
-              0 16px 48px rgba(0, 0, 0, 0.8),
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5),
+              0 16px 45px rgba(0, 0, 0, 0.7),
               0 0 20px rgba(0, 240, 255, 0.2);
   animation: fadeIn 0.15s ease-out;
   margin-top: 6px;
@@ -402,22 +401,22 @@
   letter-spacing: 0.08em;
   transition: background 0.15s;
   text-align: left;
+  border-radius: 12px;
 }
 
 .week-dash__template-option:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .week-dash__template-option--active {
-  background: rgba(0, 240, 255, 0.08);
+  background: rgba(0, 240, 255, 0.15);
 }
 
 /* ═══════ MODAL (Template Editor) ═══════ */
 .week-dash__modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -430,6 +429,13 @@
   max-width: 520px;
   padding: 0;
   overflow: hidden;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(14, 18, 36, 0.55);
+  backdrop-filter: blur(35px) saturate(220%);
+  -webkit-backdrop-filter: blur(35px) saturate(220%);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 24px;
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5),
+              0 24px 60px rgba(0, 0, 0, 0.8);
 }
 
 .week-dash__modal-header {
