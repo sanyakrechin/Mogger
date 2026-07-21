@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import WeekDashboard from './components/WeekDashboard';
 import DayHistory from './components/DayHistory';
@@ -41,6 +42,16 @@ export default function App() {
   const todayIndex = getTodayIndex();
   const assignment = state.weekAssignments.find(a => a.dayIndex === todayIndex);
   const todayTemplate = assignment ? state.templates.find(t => t.id === assignment.templateId) : undefined;
+
+  useEffect(() => {
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+      CSS.supports('-webkit-touch-callout', 'none');
+    
+    if (isIOS) {
+      document.body.classList.add('is-ios');
+    }
+  }, []);
 
   return (
     <div className="app">
