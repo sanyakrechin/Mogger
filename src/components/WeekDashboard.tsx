@@ -95,17 +95,45 @@ export default function WeekDashboard() {
   }, [newTaskText, selectedDate, dayInstance, template, dispatch]);
 
   const handleToggleTask = useCallback((taskId: string) => {
-    dispatch({ type: 'TOGGLE_DAY_TASK', date: selectedDate, taskId });
-    // Award XP for completing
     const task = dayInstance?.tasks.find(t => t.id === taskId);
-    if (task && !task.completed) {
-      dispatch({ type: 'ADD_XP', amount: 25 });
+    if (task) {
+      if (!task.completed) {
+        dispatch({ type: 'ADD_XP', amount: 25 });
+      } else {
+        dispatch({ type: 'ADD_XP', amount: -25 });
+      }
     }
+    dispatch({ type: 'TOGGLE_DAY_TASK', date: selectedDate, taskId });
   }, [selectedDate, dayInstance, dispatch]);
 
   const handleDeleteTask = useCallback((taskId: string) => {
+    const task = dayInstance?.tasks.find(t => t.id === taskId);
+    if (task && task.completed) {
+      dispatch({ type: 'ADD_XP', amount: -25 });
+    }
     dispatch({ type: 'DELETE_DAY_TASK', date: selectedDate, taskId });
-  }, [selectedDate, dispatch]);
+  }, [selectedDate, dayInstance, dispatch]);
+
+  const handleToggleHabit = useCallback((habitId: string, date: string) => {
+    const habit = state.habits.find(h => h.id === habitId);
+    if (habit) {
+      const isChecked = habit.checkedDates.includes(date);
+      if (!isChecked) {
+        dispatch({ type: 'ADD_XP', amount: 15 });
+      } else {
+        dispatch({ type: 'ADD_XP', amount: -15 });
+      }
+    }
+    dispatch({ type: 'TOGGLE_HABIT', id: habitId, date });
+  }, [state.habits, dispatch]);
+
+  const handleDeleteHabit = useCallback((habitId: string) => {
+    const habit = state.habits.find(h => h.id === habitId);
+    if (habit && habit.checkedDates.length > 0) {
+      dispatch({ type: 'ADD_XP', amount: -(habit.checkedDates.length * 15) });
+    }
+    dispatch({ type: 'DELETE_HABIT', id: habitId });
+  }, [state.habits, dispatch]);
 
   // ── Template editing ──
   const startEditTemplate = useCallback(() => {
@@ -533,7 +561,7 @@ export default function WeekDashboard() {
                             checked ? 'week-dash__habit-cb--checked' : '',
                             isToday ? 'week-dash__habit-cb--today' : '',
                           ].filter(Boolean).join(' ')}
-                          onClick={() => dispatch({ type: 'TOGGLE_HABIT', id: habit.id, date })}
+                          onClick={() => handleToggleHabit(habit.id, date)}
                         >
                           {checked && <Check size={12} />}
                         </button>
@@ -544,7 +572,7 @@ export default function WeekDashboard() {
                     </div>
                     <button
                       className="week-dash__habit-del"
-                      onClick={() => dispatch({ type: 'DELETE_HABIT', id: habit.id })}
+                      onClick={() => handleDeleteHabit(habit.id)}
                     >
                       <Trash2 size={14} />
                     </button>

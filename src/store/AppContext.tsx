@@ -266,8 +266,22 @@ function appReducer(state: AppState, action: AppAction): AppState {
       };
     }
 
-    case 'DELETE_EMOTION':
-      return { ...state, emotions: state.emotions.filter(e => e.id !== action.id) };
+    case 'DELETE_EMOTION': {
+      const emotionToDelete = state.emotions.find(e => e.id === action.id);
+      if (!emotionToDelete) return state;
+      const bonusXP = emotionToDelete.text.length > 100 ? 25 : 0;
+      const xpToDeduct = 50 + bonusXP;
+      const newXP = Math.max(0, state.gamification.xp - xpToDeduct);
+      return {
+        ...state,
+        emotions: state.emotions.filter(e => e.id !== action.id),
+        gamification: {
+          ...state.gamification,
+          xp: newXP,
+          level: calculateLevel(newXP),
+        },
+      };
+    }
 
     // ── Training ──
     case 'ADD_SPRINT':
@@ -281,7 +295,7 @@ function appReducer(state: AppState, action: AppAction): AppState {
 
     // ── Gamification ──
     case 'ADD_XP': {
-      const newXP = state.gamification.xp + action.amount;
+      const newXP = Math.max(0, state.gamification.xp + action.amount);
       return {
         ...state,
         gamification: {

@@ -64,12 +64,13 @@ export default function EmotionJournal() {
     const days = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayStr = new Date().toISOString().split('T')[0];
     for (let i = 29; i >= 0; i--) {
       const d = new Date(today);
       d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split('T')[0];
       const entry = state.emotions.find(e => e.createdAt.startsWith(dateStr));
-      days.push({ date: dateStr, mood: entry?.mood });
+      days.push({ date: dateStr, mood: entry?.mood, isToday: dateStr === todayStr });
     }
     return days;
   }, [state.emotions]);
@@ -144,9 +145,11 @@ export default function EmotionJournal() {
             <div
               key={i}
               onClick={() => setSelectedDate(d.date)}
-              className={`ej-calendar-day ${d.mood ? `ej-calendar-day--${d.mood}` : ''} ${selectedDate === d.date ? 'ej-calendar-day--active' : ''}`}
-              title={`${d.date} ${d.mood ? '- ' + d.mood : ''}`}
-            />
+              className={`ej-calendar-day ${d.mood ? `ej-calendar-day--${d.mood}` : ''} ${selectedDate === d.date ? 'ej-calendar-day--active' : ''} ${d.isToday ? 'ej-calendar-day--today' : ''}`}
+              title={`${d.date} ${d.isToday ? '(СЕГОДНЯ) ' : ''}${d.mood ? '- ' + d.mood : ''}`}
+            >
+              {d.isToday && <span className="ej-today-pulse" />}
+            </div>
           ))}
         </div>
       </div>
