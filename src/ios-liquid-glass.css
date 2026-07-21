@@ -19,21 +19,23 @@ body.is-ios .pwa-modal {
               0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Modal Overlay - Darkened & blurred background so text behind modal turns into soft dark background blur */
+/* Modal Overlay - Heavy blur on the page behind the modal */
 body.is-ios .week-dash__modal-overlay,
 body.is-ios .pwa-modal__overlay {
-  background: rgba(4, 7, 15, 0.85) !important;
-  backdrop-filter: blur(18px) brightness(0.6) !important;
-  -webkit-backdrop-filter: blur(18px) brightness(0.6) !important;
+  background: rgba(10, 14, 26, 0.7) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
 }
 
-/* Modal Window - Solid clean background with no text bleed-through */
+/* Modal Window - Heavy iOS Frosted Glass */
 body.is-ios .week-dash__modal {
-  background: #0d111e !important;
-  border: 1px solid var(--border-active) !important;
+  background: rgba(16, 22, 40, 0.88) !important;
+  backdrop-filter: blur(40px) saturate(220%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   border-radius: 20px !important;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95),
-              0 0 35px rgba(0, 240, 255, 0.2) !important;
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+              0 25px 70px rgba(0, 0, 0, 0.95) !important;
 }
 
 /* Liquid Glass Floating Bottom Navigation Bar */
@@ -110,36 +112,42 @@ body.is-ios .week-dash__day-card--selected {
 /* Liquid Frosted Glass Dropdowns & Popovers */
 body.is-ios .week-dash__template-picker,
 body.is-ios .week-dash__emoji-picker {
-  background: #0f1424 !important;
-  border: 1px solid var(--border-active) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9),
-              0 0 25px rgba(0, 240, 255, 0.25) !important;
+  background: rgba(16, 22, 40, 0.88) !important;
+  backdrop-filter: blur(35px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(210%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 18px !important;
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+              0 16px 45px rgba(0, 0, 0, 0.8) !important;
 }
 
 /* Feature Query for iOS Safari without JS dependency */
 @supports (-webkit-touch-callout: none) {
   .week-dash__modal-overlay,
   .pwa-modal__overlay {
-    background: rgba(4, 7, 15, 0.85) !important;
-    backdrop-filter: blur(18px) brightness(0.6) !important;
-    -webkit-backdrop-filter: blur(18px) brightness(0.6) !important;
+    background: rgba(10, 14, 26, 0.7) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
   }
 
   .week-dash__template-picker,
   .week-dash__emoji-picker {
-    background: #0f1424 !important;
-    border: 1px solid var(--border-active) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9),
-                0 0 25px rgba(0, 240, 255, 0.25) !important;
+    background: rgba(16, 22, 40, 0.88) !important;
+    backdrop-filter: blur(35px) saturate(210%) !important;
+    -webkit-backdrop-filter: blur(35px) saturate(210%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 18px !important;
+    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+                0 16px 45px rgba(0, 0, 0, 0.8) !important;
   }
 
   .week-dash__modal {
-    background: #0d111e !important;
-    border: 1px solid var(--border-active) !important;
+    background: rgba(16, 22, 40, 0.88) !important;
+    backdrop-filter: blur(40px) saturate(220%) !important;
+    -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
     border-radius: 20px !important;
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95),
-                0 0 35px rgba(0, 240, 255, 0.2) !important;
+    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+                0 25px 70px rgba(0, 0, 0, 0.95) !important;
   }
 }
