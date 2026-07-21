@@ -21,13 +21,20 @@ const LEVEL_NAMES = [
   'КРИСТАЛЬНЫЙ РАЗУМ'
 ];
 
+function getLocalDateStr(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 export default function EmotionJournal() {
   const { state, dispatch } = useAppState();
   const [text, setText] = useState('');
   const [mood, setMood] = useState<MoodType | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
-  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [selectedDate, setSelectedDate] = useState<string>(getLocalDateStr());
 
   const handleSave = () => {
     if (!text.trim() || !mood) return;
@@ -48,7 +55,7 @@ export default function EmotionJournal() {
 
     setText('');
     setMood(null);
-    setSelectedDate(new Date().toISOString().split('T')[0]); // Reset to today
+    setSelectedDate(getLocalDateStr());
   };
 
   const handleDelete = (id: string) => {
@@ -62,13 +69,11 @@ export default function EmotionJournal() {
 
   const last30Days = useMemo(() => {
     const days = [];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = getLocalDateStr();
     for (let i = 29; i >= 0; i--) {
-      const d = new Date(today);
+      const d = new Date();
       d.setDate(d.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = getLocalDateStr(d);
       const entry = state.emotions.find(e => e.createdAt.startsWith(dateStr));
       days.push({ date: dateStr, mood: entry?.mood, isToday: dateStr === todayStr });
     }
@@ -80,7 +85,7 @@ export default function EmotionJournal() {
   }, [state.emotions, selectedDate]);
 
   const displayDateStr = new Date(selectedDate).toLocaleDateString('ru-RU');
-  const isToday = selectedDate === new Date().toISOString().split('T')[0];
+  const isToday = selectedDate === getLocalDateStr();
 
   return (
     <div className="emotion-journal animate-fade-in">

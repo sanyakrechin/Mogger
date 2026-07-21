@@ -171,9 +171,11 @@
 }
 
 .ej-calendar-day--today {
-  border: 2px solid var(--amber) !important;
-  box-shadow: 0 0 10px var(--amber), inset 0 0 5px var(--amber) !important;
-  z-index: 5;
+  background: var(--amber) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 14px var(--amber), 0 0 4px var(--amber) !important;
+  transform: scale(1.3);
+  z-index: 10;
 }
 
 .ej-today-pulse {
