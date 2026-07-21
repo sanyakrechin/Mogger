@@ -1,5 +1,6 @@
 /* ===== APPLE LIQUID GLASS (iOS EXCLUSIVE) ===== */
 
+/* Liquid Glass Cards & Modals */
 body.is-ios .glass-card,
 body.is-ios .week-dash__detail,
 body.is-ios .week-dash__habits,
@@ -18,6 +19,16 @@ body.is-ios .pwa-modal {
               0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
+/* Liquid Glass Backdrop Overlay when dropdowns open */
+body.is-ios .week-dash__overlay,
+body.is-ios .week-dash__modal-overlay,
+body.is-ios .pwa-modal__overlay {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(12px) brightness(0.75) !important;
+  -webkit-backdrop-filter: blur(12px) brightness(0.75) !important;
+}
+
+/* Liquid Glass Floating Bottom Navigation Bar */
 @media (max-width: 768px) {
   body.is-ios .sidebar {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(10, 14, 28, 0.8) !important;
@@ -45,6 +56,7 @@ body.is-ios .pwa-modal {
   }
 }
 
+/* Liquid Pill Action Buttons */
 body.is-ios .week-dash__add-btn,
 body.is-ios .week-dash__action-btn,
 body.is-ios .pwa-prompt__install-btn,
@@ -88,112 +100,36 @@ body.is-ios .week-dash__day-card--selected {
               0 0 18px color-mix(in srgb, var(--day-color) 40%, transparent) !important;
 }
 
-body.is-ios .week-dash__task {
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: inset 0 1px 0.8px rgba(255, 255, 255, 0.15) !important;
-}
-
+/* Liquid Frosted Glass Dropdowns & Popovers */
 body.is-ios .week-dash__template-picker,
 body.is-ios .week-dash__emoji-picker {
-  background: linear-gradient(135deg, rgba(20, 26, 46, 0.9) 0%, rgba(12, 16, 32, 0.9) 100%) !important;
-  backdrop-filter: blur(32px) saturate(220%) !important;
-  -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 14px !important;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3),
-              0 12px 40px rgba(0, 0, 0, 0.8) !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(12, 16, 32, 0.65) !important;
+  backdrop-filter: blur(45px) saturate(240%) !important;
+  -webkit-backdrop-filter: blur(45px) saturate(240%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.26) !important;
+  border-radius: 20px !important;
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5),
+              0 20px 50px rgba(0, 0, 0, 0.85) !important;
 }
 
 /* Feature Query for iOS Safari without JS dependency */
 @supports (-webkit-touch-callout: none) {
-  .glass-card,
-  .week-dash__detail,
-  .week-dash__habits,
-  .day-history__card,
-  .day-history__nav,
-  .bt-panel,
-  .pwa-prompt,
-  .pwa-modal {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(11, 15, 28, 0.72) !important;
-    backdrop-filter: blur(28px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    border-radius: 16px !important;
-    box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
-                0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  .week-dash__overlay,
+  .week-dash__modal-overlay,
+  .pwa-modal__overlay {
+    background: rgba(0, 0, 0, 0.55) !important;
+    backdrop-filter: blur(12px) brightness(0.75) !important;
+    -webkit-backdrop-filter: blur(12px) brightness(0.75) !important;
   }
 
-  @media (max-width: 768px) {
-    .sidebar {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(10, 14, 28, 0.8) !important;
-      backdrop-filter: blur(32px) saturate(220%) !important;
-      -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
-      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
-                  0 -10px 30px rgba(0, 0, 0, 0.6) !important;
-    }
-
-    .sidebar__item {
-      border-radius: 14px !important;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-
-    .sidebar__item--active {
-      background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(139, 92, 246, 0.22) 100%) !important;
-      border: 1px solid rgba(0, 240, 255, 0.4) !important;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5),
-                  0 0 16px rgba(0, 240, 255, 0.3) !important;
-    }
-
-    .sidebar__item--active::before {
-      display: none !important;
-    }
-  }
-
-  .week-dash__add-btn,
-  .week-dash__action-btn,
-  .pwa-prompt__install-btn,
-  .btn--primary {
+  .week-dash__template-picker,
+  .week-dash__emoji-picker {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(12, 16, 32, 0.65) !important;
+    backdrop-filter: blur(45px) saturate(240%) !important;
+    -webkit-backdrop-filter: blur(45px) saturate(240%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.26) !important;
     border-radius: 20px !important;
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.28) !important;
     box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5),
-                0 4px 16px rgba(0, 0, 0, 0.4),
-                0 0 15px rgba(0, 240, 255, 0.2) !important;
-  }
-
-  .week-dash__add-input,
-  .week-dash__modal-input,
-  .bt-select {
-    border-radius: 20px !important;
-    background: rgba(255, 255, 255, 0.06) !important;
-    backdrop-filter: blur(16px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.3) !important;
-  }
-
-  .week-dash__day-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
-    backdrop-filter: blur(16px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px !important;
-    box-shadow: inset 0 1px 0.8px rgba(255, 255, 255, 0.2) !important;
-  }
-
-  .week-dash__day-card--selected {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--day-color) 25%, transparent), rgba(255, 255, 255, 0.06)) !important;
-    border-color: var(--day-color) !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4),
-                0 0 18px color-mix(in srgb, var(--day-color) 40%, transparent) !important;
+                0 20px 50px rgba(0, 0, 0, 0.85) !important;
   }
 }
