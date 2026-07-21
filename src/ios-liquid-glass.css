@@ -19,16 +19,21 @@ body.is-ios .pwa-modal {
               0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Liquid Glass Backdrop Overlay */
-body.is-ios .week-dash__overlay {
-  background: transparent !important;
-}
-
+/* Modal Overlay - Darkened & blurred background so text behind modal turns into soft dark background blur */
 body.is-ios .week-dash__modal-overlay,
 body.is-ios .pwa-modal__overlay {
-  background: rgba(0, 0, 0, 0.55) !important;
-  backdrop-filter: blur(12px) brightness(0.75) !important;
-  -webkit-backdrop-filter: blur(12px) brightness(0.75) !important;
+  background: rgba(4, 7, 15, 0.85) !important;
+  backdrop-filter: blur(18px) brightness(0.6) !important;
+  -webkit-backdrop-filter: blur(18px) brightness(0.6) !important;
+}
+
+/* Modal Window - Solid clean background with no text bleed-through */
+body.is-ios .week-dash__modal {
+  background: #0d111e !important;
+  border: 1px solid var(--border-active) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95),
+              0 0 35px rgba(0, 240, 255, 0.2) !important;
 }
 
 /* Liquid Glass Floating Bottom Navigation Bar */
@@ -102,60 +107,39 @@ body.is-ios .week-dash__day-card--selected {
               0 0 18px color-mix(in srgb, var(--day-color) 40%, transparent) !important;
 }
 
-/* Liquid Frosted Glass Dropdowns, Popovers & Editor Modal */
+/* Liquid Frosted Glass Dropdowns & Popovers */
 body.is-ios .week-dash__template-picker,
 body.is-ios .week-dash__emoji-picker {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(14, 18, 34, 0.84) !important;
-  backdrop-filter: blur(35px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(35px) saturate(210%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-radius: 18px !important;
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
-              0 16px 45px rgba(0, 0, 0, 0.8),
-              0 0 20px rgba(0, 240, 255, 0.15) !important;
-}
-
-body.is-ios .week-dash__modal {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(14, 18, 34, 0.85) !important;
-  backdrop-filter: blur(40px) saturate(220%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-radius: 24px !important;
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.45),
-              0 24px 60px rgba(0, 0, 0, 0.9) !important;
+  background: #0f1424 !important;
+  border: 1px solid var(--border-active) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9),
+              0 0 25px rgba(0, 240, 255, 0.25) !important;
 }
 
 /* Feature Query for iOS Safari without JS dependency */
 @supports (-webkit-touch-callout: none) {
-  .week-dash__overlay {
-    background: transparent !important;
-  }
-
   .week-dash__modal-overlay,
   .pwa-modal__overlay {
-    background: rgba(0, 0, 0, 0.55) !important;
-    backdrop-filter: blur(12px) brightness(0.75) !important;
-    -webkit-backdrop-filter: blur(12px) brightness(0.75) !important;
+    background: rgba(4, 7, 15, 0.85) !important;
+    backdrop-filter: blur(18px) brightness(0.6) !important;
+    -webkit-backdrop-filter: blur(18px) brightness(0.6) !important;
   }
 
   .week-dash__template-picker,
   .week-dash__emoji-picker {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(14, 18, 34, 0.84) !important;
-    backdrop-filter: blur(35px) saturate(210%) !important;
-    -webkit-backdrop-filter: blur(35px) saturate(210%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    border-radius: 18px !important;
-    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
-                0 16px 45px rgba(0, 0, 0, 0.8) !important;
+    background: #0f1424 !important;
+    border: 1px solid var(--border-active) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9),
+                0 0 25px rgba(0, 240, 255, 0.25) !important;
   }
 
   .week-dash__modal {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%), rgba(14, 18, 34, 0.85) !important;
-    backdrop-filter: blur(40px) saturate(220%) !important;
-    -webkit-backdrop-filter: blur(40px) saturate(220%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    border-radius: 24px !important;
-    box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.45),
-                0 24px 60px rgba(0, 0, 0, 0.9) !important;
+    background: #0d111e !important;
+    border: 1px solid var(--border-active) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.95),
+                0 0 35px rgba(0, 240, 255, 0.2) !important;
   }
 }
