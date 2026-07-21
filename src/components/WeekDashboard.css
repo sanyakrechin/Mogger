@@ -356,14 +356,11 @@
 }
 
 /* ═══════ TEMPLATE PICKER ═══════ */
-/* ═══════ TEMPLATE PICKER ═══════ */
 .week-dash__overlay {
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: transparent;
 }
 
 .week-dash__template-picker {
@@ -372,14 +369,17 @@
   left: 0;
   right: auto;
   z-index: 100;
-  background: #0f1424;
-  border: 1px solid var(--border-active);
-  border-radius: 16px;
+  background: rgba(14, 18, 34, 0.78);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 18px;
   padding: 6px;
   min-width: 190px;
   max-width: calc(100vw - 32px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9),
-              0 0 25px rgba(0, 240, 255, 0.25);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
+              0 20px 50px rgba(0, 0, 0, 0.85),
+              0 0 20px rgba(0, 240, 255, 0.15);
   animation: fadeIn 0.15s ease-out;
   margin-top: 6px;
 }
@@ -403,7 +403,7 @@
 }
 
 .week-dash__template-option:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .week-dash__template-option--active {
@@ -414,9 +414,9 @@
 .week-dash__modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 14, 26, 0.7);
-  backdrop-filter: blur(25px) saturate(180%);
-  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  background: rgba(5, 8, 18, 0.75);
+  backdrop-filter: blur(20px) brightness(0.65);
+  -webkit-backdrop-filter: blur(20px) brightness(0.65);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -429,13 +429,13 @@
   max-width: 520px;
   padding: 0;
   overflow: hidden;
-  background: rgba(16, 22, 40, 0.88);
-  backdrop-filter: blur(40px) saturate(220%);
-  -webkit-backdrop-filter: blur(40px) saturate(220%);
+  background: rgba(14, 18, 34, 0.88);
+  backdrop-filter: blur(35px) saturate(210%);
+  -webkit-backdrop-filter: blur(35px) saturate(210%);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 20px;
   box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.4),
-              0 25px 70px rgba(0, 0, 0, 0.95);
+              0 30px 80px rgba(0, 0, 0, 0.95);
 }
 
 .week-dash__modal-header {
