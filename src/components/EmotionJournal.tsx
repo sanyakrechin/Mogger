@@ -170,20 +170,20 @@ export default function EmotionJournal() {
               const m = MOODS.find(x => x.type === e.mood);
               return (
                 <div key={e.id} className="glass-card ej-history-item">
-                  <div className="ej-history-meta">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div className="ej-history-left">
+                    <div className="ej-history-meta">
                       <span className="ej-mood-icon">{m?.icon}</span>
                       <span className="ej-history-date">{new Date(e.createdAt).toLocaleDateString('ru-RU')}</span>
                     </div>
-                    <button 
-                      className="ej-history-delete" 
-                      onClick={() => handleDelete(e.id)}
-                      title="Удалить запись"
-                    >
-                      <Trash2 size={14} />
-                    </button>
+                    <div className="ej-history-text">{e.text}</div>
                   </div>
-                  <div className="ej-history-text">{e.text}</div>
+                  <button 
+                    className="ej-history-delete" 
+                    onClick={() => handleDelete(e.id)}
+                    title="Удалить запись"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
               );
             })
