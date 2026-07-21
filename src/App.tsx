@@ -9,23 +9,6 @@ import PWAInstallPrompt from './components/PWAInstallPrompt';
 import { useAppState, getTodayIndex } from './store/AppContext';
 import './App.css';
 
-const DAY_NAMES = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
-const MONTH_NAMES = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН', 'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
-
-function formatDate(): string {
-  const d = new Date();
-  const day = DAY_NAMES[(d.getDay() + 6) % 7];
-  const date = d.getDate().toString().padStart(2, '0');
-  const month = MONTH_NAMES[d.getMonth()];
-  const year = d.getFullYear();
-  return `${day} // ${date}.${month}.${year}`;
-}
-
-function formatTime(): string {
-  const d = new Date();
-  return d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-}
-
 function renderTab(tab: string) {
   switch (tab) {
     case 'home': return <WeekDashboard />;
@@ -60,7 +43,6 @@ export default function App() {
       <main className="app__content">
         <header className="app__header">
           <div className="app__header-left">
-            <span className="app__date">{formatDate()}</span>
             {todayTemplate && (
               <span
                 className="app__split-badge"
@@ -75,7 +57,6 @@ export default function App() {
               <span className="app__status-dot" />
               SYS.ONLINE
             </span>
-            <span className="app__date">{formatTime()}</span>
           </div>
         </header>
 
