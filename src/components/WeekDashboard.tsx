@@ -214,9 +214,39 @@ export default function WeekDashboard() {
     const checked = weekDates.filter(d => habit.checkedDates.includes(d)).length;
     return Math.round((checked / 7) * 100);
   }, [weekDates]);
+  const touchStartRef = React.useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
+    touchStartRef.current = null;
+
+    // Trigger swipe if horizontal drag > 45px and more horizontal than vertical
+    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+      if (deltaX < 0) {
+        // Swipe Left -> Next Day
+        setSelectedDayIndex(prev => Math.min(6, prev + 1));
+      } else {
+        // Swipe Right -> Previous Day
+        setSelectedDayIndex(prev => Math.max(0, prev - 1));
+      }
+    }
+  };
 
   return (
-    <div className="week-dash animate-fade-in">
+    <div
+      className="week-dash animate-fade-in"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* ═══ WEEK STRIP ═══ */}
       <div className="week-dash__strip">
         {DAY_LABELS.map((label, idx) => {
