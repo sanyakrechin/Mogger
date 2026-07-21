@@ -8,11 +8,17 @@ export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
+    // Check if device is iOS (iPhone/iPad)
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+      (window.CSS && CSS.supports('-webkit-touch-callout', 'none'));
+
     // Check if app is ALREADY running standalone (opened from Home Screen)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
     const isDismissed = localStorage.getItem('mogger_pwa_dismissed') === 'true';
 
-    if (!isStandalone && !isDismissed) {
+    // ONLY show prompt on iOS / iPhone when not standalone and not dismissed
+    if (isIOS && !isStandalone && !isDismissed) {
       setShowPrompt(true);
     }
 
