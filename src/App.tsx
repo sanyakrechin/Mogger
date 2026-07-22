@@ -4,7 +4,7 @@ import WeekDashboard from './components/WeekDashboard';
 import DayHistory from './components/DayHistory';
 import EmotionJournal from './components/EmotionJournal';
 import BrainTraining from './components/BrainTraining';
-import Settings from './components/Settings';
+import Profile from './components/Profile';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 import { useAppState, getTodayIndex } from './store/AppContext';
 import './App.css';
@@ -15,7 +15,8 @@ function renderTab(tab: string) {
     case 'history': return <DayHistory />;
     case 'emotions': return <EmotionJournal />;
     case 'training': return <BrainTraining />;
-    case 'settings': return <Settings />;
+    case 'profile': return <Profile />;
+    case 'settings': return <Profile />;
     default: return <WeekDashboard />;
   }
 }
@@ -37,7 +38,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
+    <div
+      className="app"
+      data-level={state.gamification.level}
+      data-theme={state.gamification.activeTheme || 'cyber-dark'}
+    >
       <PWAInstallPrompt />
       <Sidebar />
       <main className="app__content">

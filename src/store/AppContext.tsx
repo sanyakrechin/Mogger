@@ -77,11 +77,29 @@ const defaultWeekAssignments: WeekAssignment[] = [
 const defaultGamification: GamificationState = {
   xp: 0,
   level: 1,
-  streak: 0,
-  lastEntryDate: '',
-  unlockedThemes: ['default'],
+  streak: 3, // Initial streak for testing UI
+  lastEntryDate: new Date().toISOString().split('T')[0],
+  coins: 250,
+  activeTheme: 'cyber-dark',
+  unlockedThemes: ['cyber-dark'],
   unlockedSounds: [],
-  achievements: [],
+  purchasedGiftIds: ['g-coffee'],
+  equippedGiftIds: ['g-coffee'],
+  achievements: [
+    { id: 'first_split', level: 1 },
+    { id: 'streak_3', level: 1 }
+  ],
+  pushNotificationsEnabled: true,
+  pushStyle: 'aggressive',
+  weeklyQuest: {
+    id: 'wq-101',
+    title: 'БОСС-КВЕСТ: СУПЕР-ФОКУС РАЗРАБОТЧИКА',
+    description: 'Выполнить 3 Спринт-Фокуса (по 60 мин) и закрыть 100% сплитов за текущую неделю.',
+    targetSphere: 'IT-ДЕНЬ',
+    rewardCoins: 500,
+    rewardGiftId: 'g-trophy-1',
+    status: 'active'
+  }
 };
 
 const defaultState: AppState = {
@@ -321,6 +339,107 @@ function appReducer(state: AppState, action: AppAction): AppState {
         gamification: {
           ...state.gamification,
           achievements: newAchievements,
+        },
+      };
+    }
+
+    case 'ADD_COINS': {
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          coins: Math.max(0, state.gamification.coins + action.amount),
+        },
+      };
+    }
+
+    case 'SET_THEME': {
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          activeTheme: action.themeId,
+        },
+      };
+    }
+
+    case 'BUY_GIFT': {
+      if (state.gamification.coins < action.price) return state;
+      if (state.gamification.purchasedGiftIds.includes(action.giftId)) return state;
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          coins: state.gamification.coins - action.price,
+          purchasedGiftIds: [...state.gamification.purchasedGiftIds, action.giftId],
+        },
+      };
+    }
+
+    case 'EQUIP_GIFT': {
+      const isEquipped = state.gamification.equippedGiftIds.includes(action.giftId);
+      let newEquipped = [...state.gamification.equippedGiftIds];
+      if (isEquipped) {
+        newEquipped = newEquipped.filter(id => id !== action.giftId);
+      } else {
+        if (newEquipped.length >= 3) {
+          newEquipped.shift(); // keep max 3 gifts in showcase
+        }
+        newEquipped.push(action.giftId);
+      }
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          equippedGiftIds: newEquipped,
+        },
+      };
+    }
+
+    case 'SUBMIT_WEEKLY_QUEST': {
+      if (!state.gamification.weeklyQuest) return state;
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          weeklyQuest: {
+            ...state.gamification.weeklyQuest,
+            status: 'submitted',
+            submittedProofText: action.proofText,
+          },
+        },
+      };
+    }
+
+    case 'CLAIM_WEEKLY_QUEST_REWARD': {
+      if (!state.gamification.weeklyQuest) return state;
+      const quest = state.gamification.weeklyQuest;
+      const rewardGift = quest.rewardGiftId;
+      const purchased = state.gamification.purchasedGiftIds.includes(rewardGift)
+        ? state.gamification.purchasedGiftIds
+        : [...state.gamification.purchasedGiftIds, rewardGift];
+      
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          coins: state.gamification.coins + quest.rewardCoins,
+          purchasedGiftIds: purchased,
+          weeklyQuest: {
+            ...quest,
+            status: 'completed',
+          },
+        },
+      };
+    }
+
+    case 'TOGGLE_PUSH_NOTIFICATIONS': {
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          pushNotificationsEnabled: action.enabled !== undefined ? action.enabled : !state.gamification.pushNotificationsEnabled,
+          pushStyle: action.style || state.gamification.pushStyle,
         },
       };
     }

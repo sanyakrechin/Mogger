@@ -12,15 +12,6 @@ const MOODS: { type: MoodType; icon: string; label: string; color: string }[] = 
   { type: 'terrible', icon: '😣', label: 'УЖАСНО', color: 'var(--red)' },
 ];
 
-const LEVEL_NAMES = [
-  'ТУМАННЫЙ РАЗУМ',
-  'ПРОБУЖДЕНИЕ',
-  'ЯСНЫЙ ВЗГЛЯД',
-  'ФОКУС',
-  'МАСТЕР ДЗЕН',
-  'КРИСТАЛЬНЫЙ РАЗУМ'
-];
-
 function getLocalDateStr(d: Date = new Date()): string {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -61,11 +52,6 @@ export default function EmotionJournal() {
   const handleDelete = (id: string) => {
     dispatch({ type: 'DELETE_EMOTION', id });
   };
-
-  const levelName = LEVEL_NAMES[Math.min(state.gamification.level - 1, LEVEL_NAMES.length - 1)];
-  const xpInLevel = state.gamification.xp % 200;
-  const xpSegments = 10;
-  const filledSegments = Math.floor((xpInLevel / 200) * xpSegments);
 
   const last30Days = useMemo(() => {
     const days = [];
@@ -120,24 +106,19 @@ export default function EmotionJournal() {
           </div>
         </div>
 
-        {/* Right: Gamification */}
+        {/* Right: Mind Stats */}
         <div className="glass-card ej-panel">
-          <div className="ej-panel-title">ПРОФИЛЬ ОПЕРАТОРА</div>
+          <div className="ej-panel-title">СОСТОЯНИЕ РАЗУМА</div>
           <div className="ej-level-display">
-            <div className="ej-level-number">УРОВЕНЬ {state.gamification.level}</div>
-            <div className="ej-level-name">{levelName}</div>
+            <div className="ej-level-number">{state.emotions.length}</div>
+            <div className="ej-level-name">ВСЕГО ЗАПИСЕЙ ЭМОЦИЙ</div>
           </div>
-          <div className="ej-xp-bar">
-            {Array.from({ length: xpSegments }).map((_, i) => (
-              <div key={i} className={`ej-xp-segment ${i < filledSegments ? 'ej-xp-segment--filled' : ''}`} />
-            ))}
-          </div>
-          <div className="ej-stats-row">
-            <span>XP: {xpInLevel} / 200</span>
-            <span style={{ color: 'var(--amber)' }}>🔥 СЕРИЯ: {state.gamification.streak} ДНЕЙ</span>
-          </div>
-          <div className="ej-stats-row" style={{ marginTop: 'auto' }}>
-            <span>ВСЕГО ЗАПИСЕЙ: {state.emotions.length}</span>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginTop: '8px' }}>
+            Выплеск мыслей помогает освободить оперативную память мозга и снизить когнитивную нагрузку.
+          </p>
+          <div className="ej-stats-row" style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '10px' }}>
+            <span>Единый уровень и награды:</span>
+            <span style={{ color: 'var(--cyan)' }}>Вкладка Профиль 👤</span>
           </div>
         </div>
       </div>

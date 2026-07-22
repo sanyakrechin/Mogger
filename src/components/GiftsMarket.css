@@ -1,0 +1,233 @@
+/* GiftsMarket.css */
+.gifts-market {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gm-header-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+}
+
+.gm-balance-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gm-balance-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.gm-balance-val {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.gm-buy-coins-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(255, 51, 102, 0.2));
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gm-buy-coins-btn:hover {
+  background: var(--amber);
+  color: #070a14;
+  box-shadow: 0 0 15px var(--amber);
+}
+
+/* Tabs */
+.gm-tabs {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.gm-tab-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.gm-tab-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.gm-tab-btn--active {
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* Grid */
+.gm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* 3D Glass Parallax Gift Card */
+.gm-card {
+  position: relative;
+  background: rgba(14, 18, 34, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(15px);
+}
+
+.gm-card:hover {
+  transform: translateY(-6px) rotateX(4deg) rotateY(-4deg);
+}
+
+.gm-card--common { border-color: rgba(255, 255, 255, 0.2); }
+.gm-card--rare { border-color: rgba(0, 240, 255, 0.4); box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.1); }
+.gm-card--epic { border-color: rgba(139, 92, 246, 0.5); box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.15); }
+.gm-card--legendary { border-color: rgba(245, 158, 11, 0.6); box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.2); }
+.gm-card--soulbound { border-color: rgba(0, 255, 136, 0.6); background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 0, 0, 0.6)); }
+
+.gm-card-shimmer {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 55%
+  );
+  transform: rotate(30deg);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.gm-card:hover .gm-card-shimmer {
+  transform: translate(30%, 30%) rotate(30deg);
+}
+
+.gm-card-rarity {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.rarity-common { color: var(--text-dim); background: rgba(255, 255, 255, 0.08); }
+.rarity-rare { color: var(--cyan); background: rgba(0, 240, 255, 0.15); }
+.rarity-epic { color: var(--violet); background: rgba(139, 92, 246, 0.2); }
+.rarity-legendary { color: var(--amber); background: rgba(245, 158, 11, 0.2); }
+.rarity-soulbound { color: var(--green); background: rgba(0, 255, 136, 0.2); }
+
+.gm-card-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+}
+
+.gm-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.gm-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  min-height: 38px;
+}
+
+.gm-card-actions {
+  width: 100%;
+  margin-top: auto;
+}
+
+.gm-buy-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--cyan);
+  color: #070a14;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gm-buy-btn:hover:not(:disabled) {
+  box-shadow: 0 0 15px var(--cyan);
+  transform: scale(1.02);
+}
+
+.gm-buy-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gm-equip-btn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gm-equip-btn--active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: var(--cyan);
+  color: #fff;
+}

@@ -67,6 +67,30 @@ export interface DelayEntry {
   createdAt: string;
 }
 
+// ====== GIFTS & MARKET ======
+export type GiftRarity = 'common' | 'rare' | 'epic' | 'legendary' | 'soulbound';
+
+export interface GiftItem {
+  id: string;
+  name: string;
+  icon: string;
+  rarity: GiftRarity;
+  priceCoins: number;
+  description: string;
+  isSoulbound?: boolean; // Unsellable trophy for achievements/quests
+}
+
+export interface WeeklyQuest {
+  id: string;
+  title: string;
+  description: string;
+  targetSphere: string;
+  rewardCoins: number;
+  rewardGiftId: string;
+  status: 'active' | 'submitted' | 'completed';
+  submittedProofText?: string;
+}
+
 // ====== GAMIFICATION ======
 export interface Achievement {
   id: string;
@@ -78,9 +102,16 @@ export interface GamificationState {
   level: number;
   streak: number;
   lastEntryDate: string;
+  coins: number;
+  activeTheme: string; // 'cyber-dark' | 'tokyo-drift' | 'matrix-code' | 'sunset-vapor' | 'gold-sigma'
   unlockedThemes: string[];
   unlockedSounds: string[];
+  purchasedGiftIds: string[]; // List of gift IDs owned
+  equippedGiftIds: string[]; // List of up to 3 gifts shown in Profile showcase
   achievements: Achievement[];
+  weeklyQuest?: WeeklyQuest;
+  pushNotificationsEnabled: boolean;
+  pushStyle: 'aggressive' | 'coach';
 }
 
 // ====== GLOBAL STATE ======
@@ -126,6 +157,13 @@ export type AppAction =
   | { type: 'ADD_DELAY'; entry: DelayEntry }
   // Gamification
   | { type: 'ADD_XP'; amount: number }
+  | { type: 'ADD_COINS'; amount: number }
+  | { type: 'SET_THEME'; themeId: string }
+  | { type: 'BUY_GIFT'; giftId: string; price: number }
+  | { type: 'EQUIP_GIFT'; giftId: string }
+  | { type: 'SUBMIT_WEEKLY_QUEST'; proofText: string }
+  | { type: 'CLAIM_WEEKLY_QUEST_REWARD' }
+  | { type: 'TOGGLE_PUSH_NOTIFICATIONS'; enabled?: boolean; style?: 'aggressive' | 'coach' }
   | { type: 'UPDATE_ACHIEVEMENT'; id: string; level: number }
   // System
   | { type: 'LOAD_STATE'; state: AppState };

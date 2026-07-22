@@ -1,4 +1,4 @@
-import { Home, Heart, Zap, CalendarDays, Settings } from 'lucide-react';
+import { Home, Heart, Zap, CalendarDays, User } from 'lucide-react';
 import { useAppState, getTodayIndex } from '../store/AppContext';
 import './Sidebar.css';
 
@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { id: 'history', label: 'История', icon: CalendarDays },
   { id: 'emotions', label: 'Эмоции', icon: Heart },
   { id: 'training', label: 'Тренинг', icon: Zap },
-  { id: 'settings', label: 'Настройки', icon: Settings },
+  { id: 'profile', label: 'Профиль', icon: User },
 ];
 
 export default function Sidebar() {
