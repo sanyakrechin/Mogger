@@ -144,20 +144,19 @@ function MeditationTab() {
   const [duration, setDuration] = useState(10); // minutes
   const [timeLeft, setTimeLeft] = useState(duration * 60);
   const [isActive, setIsActive] = useState(false);
-  const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale'>('exhale'); // Start shrunk
+  const [phase, setPhase] = useState<'idle' | 'inhale' | 'hold' | 'exhale'>('idle');
 
   const timerIntervalRef = useRef<number | null>(null);
 
+  // Overall countdown timer
   useEffect(() => {
     if (isActive && timeLeft > 0) {
       timerIntervalRef.current = window.setInterval(() => {
         setTimeLeft(t => t - 1);
       }, 1000);
-      
-      if (phase === 'exhale') setPhase('inhale');
-
     } else if (timeLeft === 0 && isActive) {
       setIsActive(false);
+      setPhase('idle');
       if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
       
       dispatch({
@@ -171,28 +170,48 @@ function MeditationTab() {
     };
   }, [isActive, timeLeft, duration, dispatch]);
 
-  // Breathing logic
+  // Breathing sequence logic: Inhale (4s) -> Hold (4s) -> Exhale (6s) -> Inhale...
   useEffect(() => {
     if (!isActive) {
-      setPhase('exhale');
+      setPhase('idle');
       return;
     }
+
+    if (phase === 'idle') {
+      setPhase('inhale');
+      return;
+    }
+
     let timeout: number;
     if (phase === 'inhale') {
       timeout = window.setTimeout(() => setPhase('hold'), 4000);
     } else if (phase === 'hold') {
-      timeout = window.setTimeout(() => setPhase('exhale'), 6000);
+      timeout = window.setTimeout(() => setPhase('exhale'), 4000);
     } else if (phase === 'exhale') {
-      timeout = window.setTimeout(() => setPhase('inhale'), 8000);
+      timeout = window.setTimeout(() => setPhase('inhale'), 6000);
     }
     return () => clearTimeout(timeout);
   }, [phase, isActive]);
 
-
-  const toggleTimer = () => setIsActive(!isActive);
+  const toggleTimer = () => {
+    if (!isActive) {
+      setIsActive(true);
+      setPhase('inhale');
+    } else {
+      setIsActive(false);
+      setPhase('idle');
+    }
+  };
 
   const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const secs = (timeLeft % 60).toString().padStart(2, '0');
+
+  const getBreatheText = () => {
+    if (!isActive || phase === 'idle') return '⚡ ГОТОВ К ПОГРУЖЕНИЮ';
+    if (phase === 'inhale') return '🫁 ВДОХ...';
+    if (phase === 'hold') return '⏸️ ЗАДЕРЖКА...';
+    return '🌬️ ВЫДОХ...';
+  };
 
   return (
     <div className="glass-card bt-panel animate-fade-in">
@@ -210,9 +229,9 @@ function MeditationTab() {
       </div>
 
       <div className="bt-breathe-container">
-        <div className={`bt-breathe-circle bt-breathe-circle--${isActive ? phase : 'exhale'}`} />
+        <div className={`bt-breathe-circle bt-breathe-circle--${phase}`} />
         <div className="bt-breathe-text">
-          {!isActive ? 'ГОТОВ?' : (phase === 'inhale' ? 'ВДОХ...' : phase === 'hold' ? 'ЗАДЕРЖКА...' : 'ВЫДОХ...')}
+          {getBreatheText()}
         </div>
       </div>
 

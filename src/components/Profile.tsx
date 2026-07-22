@@ -60,7 +60,7 @@ export default function Profile() {
   const filledSegments = Math.floor((xpInLevel / 200) * 10);
   const hasFlame = state.gamification.streak >= 7;
 
-  const equippedGifts = state.gamification.equippedGiftIds
+  const equippedGifts = (state.gamification?.equippedGiftIds || [])
     .map(id => GIFTS_CATALOG.find(g => g.id === id))
     .filter(Boolean);
 

@@ -469,7 +469,25 @@ function loadState(): AppState {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      return { ...defaultState, ...parsed };
+      const savedGamification = parsed.gamification || {};
+      return {
+        ...defaultState,
+        ...parsed,
+        gamification: {
+          ...defaultGamification,
+          ...savedGamification,
+          purchasedGiftIds: Array.isArray(savedGamification.purchasedGiftIds)
+            ? savedGamification.purchasedGiftIds
+            : defaultGamification.purchasedGiftIds,
+          equippedGiftIds: Array.isArray(savedGamification.equippedGiftIds)
+            ? savedGamification.equippedGiftIds
+            : defaultGamification.equippedGiftIds,
+          achievements: Array.isArray(savedGamification.achievements)
+            ? savedGamification.achievements
+            : defaultGamification.achievements,
+          weeklyQuest: savedGamification.weeklyQuest || defaultGamification.weeklyQuest,
+        },
+      };
     }
   } catch (e) {
     console.error('Failed to load state:', e);

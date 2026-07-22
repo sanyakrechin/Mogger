@@ -9,8 +9,8 @@ export default function GiftsMarket() {
   const [filter, setFilter] = useState<'all' | 'owned' | 'market' | 'soulbound'>('all');
   const [showRechargeModal, setShowRechargeModal] = useState(false);
 
-  const purchasedSet = new Set(state.gamification.purchasedGiftIds);
-  const equippedSet = new Set(state.gamification.equippedGiftIds);
+  const purchasedSet = new Set(state.gamification?.purchasedGiftIds || []);
+  const equippedSet = new Set(state.gamification?.equippedGiftIds || []);
 
   const filteredGifts = GIFTS_CATALOG.filter(gift => {
     if (filter === 'owned') return purchasedSet.has(gift.id);
