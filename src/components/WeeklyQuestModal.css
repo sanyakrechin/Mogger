@@ -2,8 +2,9 @@
 .quest-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(7, 10, 20, 0.85);
-  backdrop-filter: blur(25px);
+  background: rgba(5, 8, 18, 0.92);
+  backdrop-filter: blur(30px) brightness(0.4);
+  -webkit-backdrop-filter: blur(30px) brightness(0.4);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -14,19 +15,23 @@
 .quest-modal {
   width: 100%;
   max-width: 500px;
-  background: var(--bg-card);
+  background: rgba(14, 18, 34, 0.96);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   border: 1px solid var(--amber);
   border-radius: 24px;
   padding: 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 0 50px rgba(245, 158, 11, 0.3);
   position: relative;
 }
 
 .quest-header-badge {
   display: inline-block;
+  align-self: flex-start;
+  margin-right: 40px;
   padding: 4px 12px;
   background: rgba(245, 158, 11, 0.15);
   border: 1px solid var(--amber);

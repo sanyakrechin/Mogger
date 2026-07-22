@@ -444,6 +444,23 @@ function appReducer(state: AppState, action: AppAction): AppState {
       };
     }
 
+    case 'SET_MAX_TEST_LEVEL': {
+      return {
+        ...state,
+        gamification: {
+          ...state.gamification,
+          xp: 1600,
+          level: 10,
+          streak: 30,
+          coins: 5000,
+          activeTheme: 'gold-sigma',
+          unlockedThemes: ['cyber-dark', 'tokyo-drift', 'matrix-code', 'sunset-vapor', 'gold-sigma'],
+          purchasedGiftIds: ['g-coffee', 'g-shower', 'g-chip', 'g-gigachad', 'g-dumbbell', 'g-crown', 'g-rocket', 'g-trophy-1', 'g-flame-trophy'],
+          equippedGiftIds: ['g-crown', 'g-gigachad', 'g-flame-trophy'],
+        },
+      };
+    }
+
     case 'LOAD_STATE':
       return action.state;
 

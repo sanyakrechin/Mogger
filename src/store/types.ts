@@ -164,6 +164,7 @@ export type AppAction =
   | { type: 'SUBMIT_WEEKLY_QUEST'; proofText: string }
   | { type: 'CLAIM_WEEKLY_QUEST_REWARD' }
   | { type: 'TOGGLE_PUSH_NOTIFICATIONS'; enabled?: boolean; style?: 'aggressive' | 'coach' }
+  | { type: 'SET_MAX_TEST_LEVEL' }
   | { type: 'UPDATE_ACHIEVEMENT'; id: string; level: number }
   // System
   | { type: 'LOAD_STATE'; state: AppState };

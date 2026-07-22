@@ -6,13 +6,16 @@ import {
   CheckCircle,
   ShieldAlert,
   Flame,
-  Palette
+  Palette,
+  HelpCircle,
+  Zap
 } from 'lucide-react';
 import { useAppState } from '../store/AppContext';
 import { GIFTS_CATALOG } from '../data/giftsData';
 import GiftsMarket from './GiftsMarket';
 import StoriesGeneratorModal from './StoriesGeneratorModal';
 import WeeklyQuestModal from './WeeklyQuestModal';
+import OnboardingModal from './OnboardingModal';
 import './Profile.css';
 
 const AVATARS: Record<number, { icon: string; title: string; aura: string }> = {
@@ -52,6 +55,7 @@ export default function Profile() {
   const [activeSubTab, setActiveSubTab] = useState<'profile' | 'market'>('profile');
   const [showStoriesModal, setShowStoriesModal] = useState(false);
   const [showQuestModal, setShowQuestModal] = useState(false);
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const level = state.gamification.level;
@@ -88,7 +92,7 @@ export default function Profile() {
   return (
     <div className="profile animate-fade-in">
       {/* Sub-Tab Navigation Header */}
-      <div style={{ display: 'flex', gap: '12px' }}>
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
         <button
           className={`btn ${activeSubTab === 'profile' ? 'btn--primary' : ''}`}
           onClick={() => setActiveSubTab('profile')}
@@ -100,6 +104,14 @@ export default function Profile() {
           onClick={() => setActiveSubTab('market')}
         >
           🎁 МАГАЗИН ПОДАРКОВ
+        </button>
+        <button
+          className="btn"
+          style={{ marginLeft: 'auto', background: 'rgba(0, 240, 255, 0.15)', borderColor: 'var(--cyan)', color: 'var(--cyan)' }}
+          onClick={() => setShowOnboardingModal(true)}
+        >
+          <HelpCircle size={14} style={{ display: 'inline', marginRight: '6px' }} />
+          ОБУЧЕНИЕИ ИНСТРУКЦИЯ
         </button>
       </div>
 
@@ -144,6 +156,15 @@ export default function Profile() {
                 <button className="profile-btn" onClick={() => setShowQuestModal(true)}>
                   <Trophy size={14} color="var(--amber)" />
                   БОСС-КВЕСТ ВЕКТОРА
+                </button>
+
+                <button
+                  className="profile-btn"
+                  style={{ borderColor: 'var(--amber)', color: 'var(--amber)', background: 'rgba(245, 158, 11, 0.1)' }}
+                  onClick={() => dispatch({ type: 'SET_MAX_TEST_LEVEL' })}
+                >
+                  <Zap size={14} />
+                  ТЕСТ: МАКС. Level 10 + 5000 COINS
                 </button>
               </div>
 
@@ -301,6 +322,7 @@ export default function Profile() {
       {/* Modals */}
       {showStoriesModal && <StoriesGeneratorModal onClose={() => setShowStoriesModal(false)} />}
       {showQuestModal && <WeeklyQuestModal onClose={() => setShowQuestModal(false)} />}
+      {showOnboardingModal && <OnboardingModal onClose={() => setShowOnboardingModal(false)} />}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from './components/Sidebar';
 import WeekDashboard from './components/WeekDashboard';
 import DayHistory from './components/DayHistory';
@@ -6,6 +6,7 @@ import EmotionJournal from './components/EmotionJournal';
 import BrainTraining from './components/BrainTraining';
 import Profile from './components/Profile';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
+import OnboardingModal from './components/OnboardingModal';
 import { useAppState, getTodayIndex } from './store/AppContext';
 import './App.css';
 
@@ -23,6 +24,7 @@ function renderTab(tab: string) {
 
 export default function App() {
   const { state } = useAppState();
+  const [showAutoOnboarding, setShowAutoOnboarding] = useState(false);
   const todayIndex = getTodayIndex();
   const assignment = state.weekAssignments.find(a => a.dayIndex === todayIndex);
   const todayTemplate = assignment ? state.templates.find(t => t.id === assignment.templateId) : undefined;
@@ -34,6 +36,11 @@ export default function App() {
     
     if (isIOS) {
       document.body.classList.add('is-ios');
+    }
+
+    const hasDoneOnboarding = localStorage.getItem('mogger-onboarding-done');
+    if (!hasDoneOnboarding) {
+      setShowAutoOnboarding(true);
     }
   }, []);
 
@@ -69,6 +76,10 @@ export default function App() {
           {renderTab(state.activeTab)}
         </div>
       </main>
+
+      {showAutoOnboarding && (
+        <OnboardingModal onClose={() => setShowAutoOnboarding(false)} />
+      )}
     </div>
   );
 }

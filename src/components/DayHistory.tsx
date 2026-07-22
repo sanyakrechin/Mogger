@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Check } from 'lucide-react';
-import { useAppState } from '../store/AppContext';
+import { useAppState, getTodayISO } from '../store/AppContext';
 import './DayHistory.css';
 
 const DAY_LABELS_FULL = ['ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА', 'СУББОТА', 'ВОСКРЕСЕНЬЕ'];
@@ -9,7 +9,7 @@ const MONTH_NAMES = ['ЯНВАРЬ', 'ФЕВРАЛЬ', 'МАРТ', 'АПРЕЛЬ
 export default function DayHistory() {
   const { state } = useAppState();
   const [weekOffset, setWeekOffset] = useState(0); // 0 = current week, -1 = last week, etc.
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(getTodayISO());
 
   // Generate week dates for the given offset
   const weekDates = useMemo(() => {
